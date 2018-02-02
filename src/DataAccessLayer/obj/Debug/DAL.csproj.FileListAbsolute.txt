@@ -1,0 +1,23 @@
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\DataAccessLayer\bin\Debug\DataAccessLayer.dll.config
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\DataAccessLayer\bin\Debug\DataAccess.dll
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\DataAccessLayer\bin\Debug\NPoco.dll
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+C:\Development\Development\dolphin\DataAccessLayer\bin\Debug\DataAccessLayer.dll.config
+C:\Development\Development\dolphin\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+C:\Development\Development\dolphin\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+C:\Development\Development\dolphin\DataAccessLayer\bin\Debug\DataAccess.dll
+C:\Development\Development\dolphin\DataAccessLayer\bin\Debug\NPoco.dll
+C:\Development\Development\dolphin\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+C:\Development\Development\dolphin\DataAccessLayer\obj\Debug\DataAccessLayer.pdb
+C:\Development\Development\dolphin\DataAccessLayer\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Development\Dolphin\dolphin\DataAccessLayer\bin\Debug\DataAccessLayer.dll.config
+C:\Development\Dolphin\dolphin\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+C:\Development\Dolphin\dolphin\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+C:\Development\Dolphin\dolphin\DataAccessLayer\bin\Debug\DataAccess.dll
+C:\Development\Dolphin\dolphin\DataAccessLayer\bin\Debug\NPoco.dll
+C:\Development\Dolphin\dolphin\DataAccessLayer\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Development\Dolphin\dolphin\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+C:\Development\Dolphin\dolphin\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

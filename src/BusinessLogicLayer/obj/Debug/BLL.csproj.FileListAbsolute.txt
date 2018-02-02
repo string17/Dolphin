@@ -1,0 +1,28 @@
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\bin\Debug\BusinessLogicLayer.dll
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\bin\Debug\BusinessLogicLayer.pdb
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\bin\Debug\DataAccessLayer.dll
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\bin\Debug\NPoco.dll
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\bin\Debug\DataAccessLayer.pdb
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.dll
+C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.pdb
+C:\Development\Development\dolphin\BusinessLogicLayer\bin\Debug\BusinessLogicLayer.dll
+C:\Development\Development\dolphin\BusinessLogicLayer\bin\Debug\BusinessLogicLayer.pdb
+C:\Development\Development\dolphin\BusinessLogicLayer\bin\Debug\DataAccessLayer.dll
+C:\Development\Development\dolphin\BusinessLogicLayer\bin\Debug\NPoco.dll
+C:\Development\Development\dolphin\BusinessLogicLayer\bin\Debug\DataAccessLayer.pdb
+C:\Development\Development\dolphin\BusinessLogicLayer\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+C:\Development\Development\dolphin\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.dll
+C:\Development\Development\dolphin\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.pdb
+C:\Development\Development\dolphin\BusinessLogicLayer\bin\Debug\log4net.dll
+C:\Development\Development\dolphin\BusinessLogicLayer\bin\Debug\log4net.xml
+C:\Development\Dolphin\dolphin\BusinessLogicLayer\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+C:\Development\Dolphin\dolphin\BusinessLogicLayer\bin\Debug\BusinessLogicLayer.dll
+C:\Development\Dolphin\dolphin\BusinessLogicLayer\bin\Debug\BusinessLogicLayer.pdb
+C:\Development\Dolphin\dolphin\BusinessLogicLayer\bin\Debug\DataAccessLayer.dll
+C:\Development\Dolphin\dolphin\BusinessLogicLayer\bin\Debug\log4net.dll
+C:\Development\Dolphin\dolphin\BusinessLogicLayer\bin\Debug\NPoco.dll
+C:\Development\Dolphin\dolphin\BusinessLogicLayer\bin\Debug\DataAccessLayer.pdb
+C:\Development\Dolphin\dolphin\BusinessLogicLayer\bin\Debug\log4net.xml
+C:\Development\Dolphin\dolphin\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.dll
+C:\Development\Dolphin\dolphin\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.pdb

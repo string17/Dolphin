@@ -1,0 +1,105 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //dolphin.Models.UserView Model_User = ViewBag.User;
+    DolphinContext.Data.Models.DolUser Model_User = ViewBag.User;
+    BLL.ApplicationLogic.UserManagement Usermgt = new BLL.ApplicationLogic.UserManagement();
+    IEnumerable<DolphinContext.Data.Models.DolRole> Model_Role = ViewBag.Roles;
+    //IEnumerable<DolphinContext.Data.Models.DolCompany> Model_Institution = ViewBag.Customer;
+}
+
+
+
+
+
+
+<form class="form-horizontal row-border" id="validate-form" data-parsley-validate method="post" action="" enctype="multipart/form-data">
+    <div class="col-md-12">
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">First Name</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="FirstName" value="@((Model_User != null)?Model_User.FirstName : string.Empty)">
+                </div>
+            </div>
+
+            
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Image</label>
+                <div class="col-sm-6">
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <span class="btn btn-default btn-file">
+                            <span class="fileinput-new">Select file</span>
+                            <span class="fileinput-exists">Change</span>
+                            <input type="file" name="UserImg" >
+                            <input type="text" class="form-control hidden" name="UserImg1" value="@((Model_User != null) ? Model_User.UserImg : string.Empty)">
+                        </span>
+                        <span class="fileinput-filename"></span>
+                        <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">&times;</a>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Phone Number</label>
+                <div class="col-sm-6">
+                    <input type="tel" data-parsley-type="digits" name="PhoneNos" class="form-control" value="@((Model_User != null)?Model_User.PhoneNos : string.Empty)">
+                </div>
+            </div>
+
+           
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Other Names</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="OtherNames" value="@((Model_User != null)?Model_User.OtherNames : string.Empty)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Email</label>
+                <div class="col-sm-6">
+                    <input type="text" data-parsley-type="email" class="form-control" name="UserName" value="@((Model_User != null)?Model_User.UserName.ToLower() : string.Empty)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Password</label>
+                <div class="col-sm-6">
+                    <input type="password" data-parsley-minlength="6" class="form-control" name="UserPWD" value="@((Model_User != null)? Usermgt.base64Decode(Model_User.UserPWD): string.Empty)">
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                <label class="col-sm-3 control-label">Role</label>
+                <div class="col-sm-6">
+                    <select class="form-control" id="source" name="RoleId">
+                        <option value="">Select Role</option>
+                        @foreach (var n in Model_Role)
+                        {
+                            <option value="@n.RoleId">@n.RoleName</option>
+                        }
+                    </select>
+                </div>
+            </div>*@
+            <div class="col-lg-9" style="margin-top:25px">
+                <div class="btn-toolbar">
+                    <button class="btn btn-primary pull-right" type="submit">Update</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+</form>
+ 
