@@ -9,7 +9,7 @@ namespace BLL.ApplicationLogic
 {
     public class UserManagement:BaseService
     {
-        private DolServiceDb context = DolServiceDb.GetInstance();
+        private readonly DolServiceDb context = DolServiceDb.GetInstance();
         public DolUser getUserByUsername(string Username)
         {
             string SQL = "Select * from DolUser where UserName =@0";
@@ -228,6 +228,20 @@ namespace BLL.ApplicationLogic
             else
             {
                 return false;
+            }
+        }
+
+
+        public DolphinLoginResponse verifyUser(DolphinLoginRequest userLogin)
+        {
+            var rslt = context.Fetch<DolUser>().Where(a => a.UserName == userLogin.Username).FirstOrDefault();
+            if (rslt.UserPWD == userLogin.Password)
+            {
+                return new DolphinLoginResponse { RespCode = "00", RespMessage = "Successful" };
+            }
+            else
+            {
+                return new DolphinLoginResponse { RespCode = "02", RespMessage = "Failed" };
             }
         }
 

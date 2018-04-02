@@ -58,6 +58,7 @@
     <Compile Include="CustomObjects\EngineerViewModel.cs" />
     <Compile Include="CustomObjects\IncidentViewModel.cs" />
     <Compile Include="CustomObjects\IncidentView.cs" />
+    <Compile Include="CustomObjects\LoginRequest.cs" />
     <Compile Include="CustomObjects\RoleViewModel.cs" />
     <Compile Include="CustomObjects\Terminal.cs" />
     <Compile Include="CustomObjects\TerminalView.cs" />

@@ -26,3 +26,13 @@ C:\Development\Dolphin\dolphin\BusinessLogicLayer\bin\Debug\DataAccessLayer.pdb
 C:\Development\Dolphin\dolphin\BusinessLogicLayer\bin\Debug\log4net.xml
 C:\Development\Dolphin\dolphin\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.dll
 C:\Development\Dolphin\dolphin\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.pdb
+D:\Development\Dolphin\src\BusinessLogicLayer\bin\Debug\BusinessLogicLayer.dll
+D:\Development\Dolphin\src\BusinessLogicLayer\bin\Debug\BusinessLogicLayer.pdb
+D:\Development\Dolphin\src\BusinessLogicLayer\bin\Debug\DataAccessLayer.dll
+D:\Development\Dolphin\src\BusinessLogicLayer\bin\Debug\log4net.dll
+D:\Development\Dolphin\src\BusinessLogicLayer\bin\Debug\NPoco.dll
+D:\Development\Dolphin\src\BusinessLogicLayer\bin\Debug\DataAccessLayer.pdb
+D:\Development\Dolphin\src\BusinessLogicLayer\bin\Debug\log4net.xml
+D:\Development\Dolphin\src\BusinessLogicLayer\obj\Debug\BLL.csprojResolveAssemblyReference.cache
+D:\Development\Dolphin\src\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.dll
+D:\Development\Dolphin\src\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.pdb
