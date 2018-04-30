@@ -1,8 +1,0 @@
-C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\bin\Debug\BusinessLogicLayer.dll
-C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\bin\Debug\BusinessLogicLayer.pdb
-C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\bin\Debug\DataAccessLayer.dll
-C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\bin\Debug\NPoco.dll
-C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\bin\Debug\DataAccessLayer.pdb
-C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.csprojResolveAssemblyReference.cache
-C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.dll
-C:\Users\USER\Documents\visual studio 2015\Projects\dolphin\BusinessLogicLayer\obj\Debug\BusinessLogicLayer.pdb
