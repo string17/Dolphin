@@ -10,12 +10,6 @@ namespace DAL.CustomObjects
 
         public string Username { get; set; }
         public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
-        public string UserActivity { get; set; }
-        public string Comment { get; set; }
-        public DateTime DateLog { get; set; }
-        public string SystemName { get; set; }
-        public string SystemIp { get; set; }
     }
 
     public class UserInfo

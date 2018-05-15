@@ -19,10 +19,10 @@ namespace BLL.ApplicationLogic
         //}
 
 
-        public List<UserMenuResp> GetMenuByRole(int RoleId)
+        public List<UserMenu> GetMenuByRole(int RoleId)
         {
             string sql = "select A.*,B.*,C.* from Dol_MenuItem A inner join Role_Menu B on A.ItemId=B.ItemId inner join User_Role C on B.RoleId=C.RoleId where C.RoleId=@0";
-            var _actual = _db.Fetch<UserMenuResp>(sql, RoleId).ToList();
+            var _actual = _db.Fetch<UserMenu>(sql, RoleId).ToList();
             return _actual;
         }
 
@@ -49,13 +49,11 @@ namespace BLL.ApplicationLogic
 
         public List<DolMenuItem> GetMenuByUsername(string Username)
         {
-
             try
             {
                 string sql = "select A.*,B.*,C.* from Dol_MenuItem A inner join Role_Menu B on A.ItemId=B.ItemId inner join Dol_User C on B.RoleId=C.RoleId where A.ItemStatus='true' and C.UserName=@0 order by A.Sequence asc ";
-                var _actual = _db.Fetch<DolMenuItem>(sql, Username);
-
-                return _actual;
+                var actual = _db.Fetch<DolMenuItem>(sql, Username);
+                return actual;
             }
             catch (Exception ex)
             {

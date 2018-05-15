@@ -1,34 +1,78 @@
 ﻿using DAL.CustomObjects;
 using DolphinContext.Data.Models;
-using log4net;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using System.Web.Configuration;
 
 namespace BLL.ApplicationLogic
 {
     public class UserManagement
     {
         private readonly DolphinDb _db = DolphinDb.GetInstance();
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         public UserInfo GetUserInfo(UserObj userLogin)
         {
-            string sql = "select A.*,B.*,C.ClientAlias from Dol_User A inner join User_Role B on A.RoleId=B.RoleId inner join Dol_Client C on C.ClientId=A.ClientId where A.UserName=@0 and A.IsDelete='false' ";
+            //var _password = EncryptPassword(userLogin.Password);
+            string sql = "select A.*,B.*,C.Alias from Dol_User A inner join User_Role B on A.RoleId=B.RoleId inner join Dol_Company C on C.CompanyId=A.CompanyId where A.UserName=@0 and A.IsDelete='false' ";
             var _actual = _db.FirstOrDefault<UserInfo>(sql, userLogin.Username);
             return _actual;
 
         }
 
-       
+        private string EncryptPassword(string UserPWD)
+        {
+            string EncryptionKey = "MAKV2SPBNI99212";
+            byte[] clearBytes = Encoding.Unicode.GetBytes(UserPWD);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(clearBytes, 0, clearBytes.Length);
+                        cs.Close();
+                    }
+                    UserPWD = Convert.ToBase64String(ms.ToArray());
+                }
+            }
+            return UserPWD;
+        }
+
+        private string DecryptPassword(string UserPWD)
+        {
+            string EncryptionKey = "MAKV2SPBNI99212";
+            byte[] cipherBytes = Convert.FromBase64String(UserPWD);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(cipherBytes, 0, cipherBytes.Length);
+                        cs.Close();
+                    }
+                    UserPWD = Encoding.Unicode.GetString(ms.ToArray());
+                }
+            }
+            return UserPWD;
+        }
+
+
+        //public DolUser getUserByUsername(string Username)
+        //{
+        //    string sql = "Select * from DolUser where UserName =@0";
+        //    var actual = _db.FirstOrDefault<DolUser>(sql, Username.ToUpper());
+        //    return actual;
+        //}
 
         public DolUser GetUserByUsername(string Username, int? CompanyId)
         {
@@ -188,9 +232,9 @@ namespace BLL.ApplicationLogic
 
         public bool DoesPasswordExists(string Username, string Password)
         {
-            string _password = new EncryptionManager().EncryptValue(Password);
+            string _password = EncryptPassword(Password);
             var rslt = _db.FirstOrDefault<DolUser>("where UserName=@0 and Password=@1", Username, _password);
-            if (rslt != null)
+            if (rslt.Password == _password)
             {
                 return true;
             }
@@ -202,7 +246,7 @@ namespace BLL.ApplicationLogic
 
         public bool IsUserActive(string Username, string Password)
         {
-            string _password =new EncryptionManager().EncryptValue(Password);
+            string _password = EncryptPassword(Password);
             var rslt = _db.FirstOrDefault<DolUser>("where UserName=@0 and Password=@1" , Username, _password);
             if (rslt.Isuseractive==true)
             {
@@ -227,19 +271,6 @@ namespace BLL.ApplicationLogic
                 return false;
             }
            
-        }
-
-        public bool DoesEmailExists(string Email)
-        {
-            var rslt = _db.SingleOrDefault<DolUser>("where Email=@0", Email); 
-            if (rslt == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
         }
 
         public bool InsertUser(UserDetails userDetails)
@@ -273,7 +304,7 @@ namespace BLL.ApplicationLogic
 
         public int GetFreshUser(string Username)
         {
-            string sql = "Select COUNT(*) from Audit_Trail where UserName = @0";
+            string sql = "Select COUNT(*) from AuditTrail where UserName = @0";
             var _actual = _db.ExecuteScalar<int>(sql, Username);
             return Convert.ToInt32(_actual);
         }
@@ -295,7 +326,7 @@ namespace BLL.ApplicationLogic
                 _users.Middlename = userDetails.MiddleName;
                 _users.Lastname = userDetails.LastName;
                 _users.Username = userDetails.UserName;
-                _users.Password = new EncryptionManager().EncryptValue(userDetails.Password);
+                _users.Password = EncryptPassword(userDetails.Password);
                 _users.Userimg = DoFileUpload(userDetails.UserImg);
                 _users.Phoneno = userDetails.PhoneNo;
                 _users.Roleid = userDetails.RoleId;
@@ -322,7 +353,7 @@ namespace BLL.ApplicationLogic
                 _user.Lastname = userDetails.LastName;
                 _user.Userimg = DoFileUpload(userDetails.UserImg);
                 _user.Username = userDetails.UserName;
-                _user.Password = new EncryptionManager().EncryptValue(userDetails.Password);
+                _user.Password = EncryptPassword(userDetails.Password);
                 _user.Phoneno = userDetails.PhoneNo;
                 _user.Modifiedby = userDetails.ModifiedBy;
                 _user.Modifiedon = userDetails.ModifiedOn;
@@ -334,65 +365,6 @@ namespace BLL.ApplicationLogic
                 return false;
             }
         }
-
-
-        public UserResponse PasswordNotification(string Email)
-        {
-            bool email = DoesEmailExists(Email);
-            if (email)
-            {
-                EmailObj emailModel = new EmailObj();
-                string _domainUsername = WebConfigurationManager.AppSettings["UserName"];
-                string _domainPWD = WebConfigurationManager.AppSettings["PWD"];
-                string PasswordUrl = WebConfigurationManager.AppSettings["BaseURL"];
-                var body = "Kindly click on this link  to reset your password. </br>" + PasswordUrl + "Dolphin/Resetpassword?Email=" + Email;
-                var message = new MailMessage();
-                message.To.Add(new MailAddress(Email));  // replace with valid value 
-                message.From = new MailAddress(WebConfigurationManager.AppSettings["SupportAddress"]);  // replace with valid value
-                message.Subject = "Password Update";
-                message.Body = string.Format(body, emailModel.FromEmail, emailModel.Message);
-                message.IsBodyHtml = true;
-
-                using (SmtpClient smtp = new SmtpClient())
-                {
-                    try
-                    {
-                        smtp.Host = WebConfigurationManager.AppSettings["EmailHost"];
-                        smtp.EnableSsl = true;
-                        NetworkCredential NetworkCred = new NetworkCredential(_domainUsername, _domainPWD);
-                        smtp.UseDefaultCredentials = true;
-                        smtp.Credentials = NetworkCred;
-                        smtp.Port = Convert.ToInt32(WebConfigurationManager.AppSettings["EmailPort"]);
-                        smtp.Send(message);
-                        return new UserResponse
-                        {
-                            RespCode = "00",
-                            RespMessage ="kindly check your email"
-                        };
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.InfoFormat("Email", ex.Message);
-                        return new UserResponse
-                        {
-                            RespCode = "01",
-                            RespMessage = ex.Message
-                        };
-                    }
-                }
-            }
-            else
-            {
-                return new UserResponse {
-
-                    RespCode="01",
-                    RespMessage="Invalid email address"
-
-                };
-            }
-            
-        }
-
 
         private string DoFileUpload(HttpPostedFileBase pic, string filename = "")
         {

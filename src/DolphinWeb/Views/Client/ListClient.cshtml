@@ -1,0 +1,111 @@
+﻿@{
+    IEnumerable<DolphinWeb.Models.ClientResp> Model_Clients = ViewBag.Clients;
+    //BLL.ApplicationLogic.UserManagement usermgt = new BLL.ApplicationLogic.UserManagement();
+
+    int sn = 0;
+
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@{if (!String.IsNullOrEmpty(@ViewBag.ErrorMsg))
+    {
+        <div class="alert alert-danger" role="alert" style="margin:auto;width:100%;">
+            @ViewBag.ErrorMsg
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        </div>
+    }
+    else if (!String.IsNullOrEmpty(ViewBag.SuccessMsg))
+    {
+        <div class="alert alert-success" role="alert" style="margin:auto;width:100%;">
+            @ViewBag.SuccessMsg
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        </div>
+    }
+}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">@ViewBag.Message</h4>
+        <div class="row">
+            <div class="col-12">
+                <table id="order-listing" class="table">
+                    <thead>
+                        <tr>
+                            <th>S/N #</th>
+                            <th>Name</th>
+                            <th>Alias</th>
+                            <th>Response Time</th>
+                            <th>Resolution Time</th>
+                            <th>Banner</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                 
+                        @foreach (var n in Model_Clients)
+                        {
+
+                            sn += 1;
+                            <tr>
+                                <td>@sn</td>
+                                <td>@n.ClientName</td>
+                                <td>@n.ClientAlias</td>
+                                <td>@n.RespTime</td>
+                                <td>@n.RestTime</td>
+                                <td>@n.ClientBanner</td>
+                                <td><label class="badge badge-success">@(Convert.ToBoolean(n.IsClientActive) ? "Active" : "Inactive")</label></td>
+                                <td class="noExl">
+                                    @*<a data-toggle="modal" onclick="showAccountdetails(this.id);" id="@n.RoleId">Details</a>*@
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuOutlineButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                            Action
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal-2">Details</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="@Url.Action("ModifyClient", new { ClientId = @n.ClientId })" id="PageLoad">Edit</a>
+                                        </div>
+                                    </div>
+                                </td>
+
+
+                            </tr>
+
+                        }
+                  
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+          <!-- Modal starts -->
+@*<div class="text-center">
+    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal-2">Click for demo<i class="mdi mdi-play-circle ml-1"></i></button>
+</div>*@
+<div class="modal fade" id="exampleModal-2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-2" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel-2">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success">Submit</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->

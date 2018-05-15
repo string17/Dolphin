@@ -54,3 +54,11 @@ C:\Development\Dol\Dolphin2.0\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 C:\Development\Dol\Dolphin2.0\DAL\obj\Debug\DAL.dll
 C:\Development\Dol\Dolphin2.0\DAL\obj\Debug\DAL.pdb
 C:\Development\Dol\Dolphin2.0\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Development\Dol\DolphinWeb\DAL\bin\Debug\DAL.dll.config
+C:\Development\Dol\DolphinWeb\DAL\bin\Debug\DAL.dll
+C:\Development\Dol\DolphinWeb\DAL\bin\Debug\DAL.pdb
+C:\Development\Dol\DolphinWeb\DAL\bin\Debug\NPoco.dll
+C:\Development\Dol\DolphinWeb\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+C:\Development\Dol\DolphinWeb\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+C:\Development\Dol\DolphinWeb\DAL\obj\Debug\DAL.dll
+C:\Development\Dol\DolphinWeb\DAL\obj\Debug\DAL.pdb

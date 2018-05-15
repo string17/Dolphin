@@ -76,10 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="CustomObjects\AuditObj.cs" />
     <Compile Include="CustomObjects\ClientObj.cs" />
-    <Compile Include="CustomObjects\Constants.cs" />
-    <Compile Include="CustomObjects\EmailObj.cs" />
     <Compile Include="CustomObjects\MenuObj.cs" />
     <Compile Include="CustomObjects\RoleObj.cs" />
     <Compile Include="CustomObjects\UserObj.cs" />

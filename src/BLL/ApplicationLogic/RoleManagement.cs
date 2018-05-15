@@ -37,15 +37,15 @@ namespace BLL.ApplicationLogic
 
         public bool InsertRole(RoleObj role)
         {
-            //try
-            //{
-               // _db.Insert(role);
+            try
+            {
+                _db.Insert(role);
                 return true;
-            //}
-            //catch (Exception ex)
-            //{
-              //  return false;
-            //}
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public int DeleteRole(int RoleId)

@@ -15,13 +15,6 @@ namespace DAL.CustomObjects
     }
 
 
-
-    public class RoleResp
-    {
-        public string RespCode { get; set; }
-        public string RespMessage { get; set; }
-    }
-
     public class RoleMenuObj
     {
         public int Id { get; set; }
