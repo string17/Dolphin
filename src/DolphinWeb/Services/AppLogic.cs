@@ -20,10 +20,12 @@ namespace DolphinWeb.Services
             string url = string.Concat(_baseUrl, "login");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", "Username=" + UserName  + "&Password=" + Password + "&Computername=" + Computername + "&SystemIp="+ SystemIp, ParameterType.RequestBody);
+            request.AddParameter("Username", UserName);
+            request.AddParameter("Password", Password);
+            request.AddParameter("Computername", Computername);
+            request.AddParameter("SystemIp", SystemIp);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             UserResponse resp = JsonConvert.DeserializeObject<UserResponse>(response.Content);
             if (resp == null || resp.RespCode == null)
@@ -42,10 +44,11 @@ namespace DolphinWeb.Services
             string url = string.Concat(_baseUrl, "userdetails");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", "UserId=" + UserName+ "&Computername=" + Computername + "&SystemIp=" + SystemIp, ParameterType.RequestBody);
+            request.AddParameter("UserId", UserName);
+            request.AddParameter("Computername", Computername);
+            request.AddParameter("SystemIp", SystemIp);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             if (response == null)
                 return null;
@@ -68,9 +71,11 @@ namespace DolphinWeb.Services
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
             request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
-            request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", "Username=" + Username + "&Computername=" + Computername + "&SystemIp=" + SystemIp, ParameterType.RequestBody);
+            request.AddParameter("application/json", ParameterType.RequestBody);
+            request.AddParameter( "Username", Username);
+            request.AddParameter("Computername", Computername);
+            request.AddParameter("SystemIp", SystemIp);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             if (response == null)
                 return null;
@@ -93,10 +98,11 @@ namespace DolphinWeb.Services
             string url = string.Concat(_baseUrl, "Menu");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", "Username=" + Username + "&Computername=" + Computername + "&SystemIp=" + SystemIp, ParameterType.RequestBody);
+            request.AddParameter("Username", Username);
+            request.AddParameter("Computername", Computername);
+            request.AddParameter("SystemIp", SystemIp);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
             List<UserMenu> resp = JsonConvert.DeserializeObject<List<UserMenu>>(response.Content);
@@ -111,66 +117,14 @@ namespace DolphinWeb.Services
 
         }
 
-        //Get all menu
-        public List<MenuObj> GetAllMenu()
-        {
-            return new List<MenuObj>
-            {
-
-            };
-            //string url = string.Concat(_baseUrl, "ListMenu");
-            //var client = new RestClient(url);
-            //var request = new RestSharp.RestRequest(Method.POST);
-            //request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            //request.AddHeader("cache-control", "no-cache");
-            //request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            //IRestResponse response = client.Execute(request);
-
-            //List<MenuObj> resp = JsonConvert.DeserializeObject<List<MenuObj>>(response.Content);
-            //if (resp == null)
-            //{
-            //    return resp;
-            //}
-            //else
-            //{
-            //    return resp;
-            //}
-
-        }
-
-
-        //public List<RoleObj> GetAllRole()
-        //{
-        //    string url = string.Concat(_baseUrl, "allrole");
-        //    var client = new RestClient(url);
-        //    var request = new RestSharp.RestRequest(Method.POST);
-        //    request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-        //    request.AddHeader("cache-control", "no-cache");
-        //    request.AddHeader("content-type", "application/x-www-form-urlencoded");
-        //    IRestResponse response = client.Execute(request);
-
-        //    List<RoleObj> resp = JsonConvert.DeserializeObject<List<RoleObj>>(response.Content);
-        //    if (resp == null)
-        //    {
-        //        return resp;
-        //    }
-        //    else
-        //    {
-        //        return resp;
-        //    }
-        //    //return Roles;
-        //}
-
 
         public List<RoleObj> GetAllRole()
         {
             string url = string.Concat(_baseUrl, "allrole");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", ParameterType.RequestBody);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
             List<RoleObj> resp = JsonConvert.DeserializeObject<List<RoleObj>>(response.Content);
@@ -191,10 +145,8 @@ namespace DolphinWeb.Services
             string url = string.Concat(_baseUrl, "allbrand");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", ParameterType.RequestBody);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
             List<BrandObj> resp = JsonConvert.DeserializeObject<List<BrandObj>>(response.Content);
@@ -286,10 +238,19 @@ namespace DolphinWeb.Services
             string url = string.Concat(_baseUrl, "insertclient");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", "ClientName=" + param.ClientName + "&RespTime=" + param.RespTime + "&RestTime=" + param.RestTime + "&ClientBanner=" + param.ClientBanner + "&ExtClientBanner=" + param.ExtClientBanner + "&ClientAlias=" +param.ClientAlias+ "&IsClientActive="+param.IsClientActive+ "&CreatedBy="+param.CreatedBy+ "&CreatedOn="+param.CreatedOn + "&SystemIp=" + param.SystemIp + "&Computername=" + param.Computername, ParameterType.RequestBody);
+            request.AddParameter("ClientId", param.ClientId);
+            request.AddParameter("ClientName", param.ClientName);
+            request.AddParameter("ClientAlias", param.ClientAlias);
+            request.AddParameter("IsClientActive", param.IsClientActive);
+            request.AddParameter("CreatedBy", param.CreatedBy);
+            request.AddParameter("CreatedOn", param.CreatedOn);
+            request.AddParameter("SystemIp", param.SystemIp);
+            request.AddParameter("Computername", param.Computername);
+            request.AddParameter("RespTime", param.RespTime);
+            request.AddParameter("RestTime", param.RestTime);
+            request.AddParameter("ClientBanner", param.ClientBanner);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
             ClientResp resp = JsonConvert.DeserializeObject<ClientResp>(response.Content);
@@ -304,27 +265,36 @@ namespace DolphinWeb.Services
 
         }
 
-        public bool ModifyClient(ClientObj param)
+
+        public ClientResp ModifyClient(ClientObj param)
         {
             string url = string.Concat(_baseUrl, "modifyclient");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", "ClientName=" + param.ClientName + "&RespTime=" + param.RespTime + "&RestTime=" + param.RestTime + "&ClientBanner=" + param.ClientBanner + "&ExtClientBanner=" + param.ExtClientBanner + "&ClientAlias=" + param.ClientAlias + "&IsClientActive=" + param.IsClientActive + "&CreatedBy=" + param.CreatedBy + "&CreatedOn=" + param.CreatedOn +"&ClientId=" + param.ClientId + "&SystemIp=" + param.SystemIp + "&Computername=" + param.Computername, ParameterType.RequestBody);
+            request.AddParameter("ClientId", param.ClientId);
+            request.AddParameter("ClientName", param.ClientName);
+            request.AddParameter("ClientAlias", param.ClientAlias);
+            request.AddParameter("IsClientActive", param.IsClientActive);
+            request.AddParameter("CreatedBy", param.CreatedBy);
+            request.AddParameter("CreatedOn", param.CreatedOn);
+            request.AddParameter("SystemIp",param.SystemIp);
+            request.AddParameter("Computername", param.Computername);
+            request.AddParameter("RespTime", param.RespTime);
+            request.AddParameter("RestTime", param.RestTime);
+            request.AddParameter("ClientBanner", param.ClientBanner);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
             ClientResp resp = JsonConvert.DeserializeObject<ClientResp>(response.Content);
-            if (resp.RespCode.Equals("00"))
+            if (resp == null || resp.RespCode == null)
             {
-                return true;
+                return null;
             }
             else
             {
-                return false;
+                return resp;
             }
-
         }
 
         public ClientResp GetClientDetails(int ClientId)
@@ -332,10 +302,9 @@ namespace DolphinWeb.Services
             string url = string.Concat(_baseUrl, "clientdetails");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", "ClientId=" + ClientId, ParameterType.RequestBody);
+            request.AddParameter("ClientId", ClientId);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
             ClientResp resp = JsonConvert.DeserializeObject<ClientResp>(response.Content);
@@ -354,10 +323,12 @@ namespace DolphinWeb.Services
             string url = string.Concat(_baseUrl, "insertrole");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", "Title=" + param.Title+ "&_Desc=" + param._Desc + "&IsRoleActive=" + param.IsRoleActive + "&RoleId="+param.RoleId, ParameterType.RequestBody);
+            request.AddParameter("RoleId", param.RoleId);
+            request.AddParameter("Title", param.Title);
+            request.AddParameter("_Desc", param._Desc);
+            request.AddParameter("IsRoleActive", param.IsRoleActive);
+            request.AddParameter("application/json",ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
             RoleResp resp = JsonConvert.DeserializeObject<RoleResp>(response.Content);
@@ -378,10 +349,12 @@ namespace DolphinWeb.Services
             string url = string.Concat(_baseUrl, "modifyrole");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", "Title=" + Title + "&_Desc=" + _Desc + "&IsRoleActive=" + IsRoleActive + "&RoleId=" + RoleId, ParameterType.RequestBody);
+            request.AddParameter("RoleId", RoleId);
+            request.AddParameter("Title", Title);
+            request.AddParameter("_Desc", _Desc);
+            request.AddParameter("IsRoleActive", IsRoleActive);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             RoleResp resp = JsonConvert.DeserializeObject<RoleResp>(response.Content);
             if (resp.RespCode.Equals("00"))
@@ -404,7 +377,8 @@ namespace DolphinWeb.Services
             request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", "RoleId=" + RoleId, ParameterType.RequestBody);
+            request.AddParameter("RoleId", RoleId);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
             RoleResp resp = JsonConvert.DeserializeObject<RoleResp>(response.Content);
@@ -424,12 +398,12 @@ namespace DolphinWeb.Services
             string url = string.Concat(_baseUrl, "logout");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", "Username=" + UserName + "&Computername=" + Computername + "&SystemIp=" + SystemIp, ParameterType.RequestBody);
+            request.AddParameter("Username", UserName);
+            request.AddParameter("Computername", Computername);
+            request.AddParameter("SystemIp", SystemIp);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-
             UserResponse resp = JsonConvert.DeserializeObject<UserResponse>(response.Content);
             if (resp.RespCode.Equals("00"))
             {
@@ -448,10 +422,12 @@ namespace DolphinWeb.Services
             string url = string.Concat(_baseUrl, "changepassword");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded","Username=" + Username + "&Password=" + Password + "&EventDate = " + DateTime.Now + "&Computername=" + Computername + "&SystemIp=" + SystemIp, ParameterType.RequestBody);
+            request.AddParameter("Username", Username);
+            request.AddParameter("Username", Password);
+            request.AddParameter("Computername", Computername);
+            request.AddParameter("SystemIp", SystemIp);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             UserResponse resp = JsonConvert.DeserializeObject<UserResponse>(response.Content);
             if (resp == null || resp.RespCode == null)
@@ -471,10 +447,11 @@ namespace DolphinWeb.Services
             string url = string.Concat(_baseUrl, "forgotpassword");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("postman-token", "06950d99-7ddc-04c1-689d-022955c29656");
-            request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", "Email=" + Email + "&EventDate=" + DateTime.Now + "&Computername=" + Computername + "&SystemIp=" + SystemIp, ParameterType.RequestBody);
+            request.AddParameter("Email", Email);
+            request.AddParameter("Computername", Computername);
+            request.AddParameter("SystemIp", SystemIp);
+            request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             UserResponse resp = JsonConvert.DeserializeObject<UserResponse>(response.Content);
             if (resp == null || resp.RespCode == null)
@@ -485,6 +462,51 @@ namespace DolphinWeb.Services
             {
                 return resp;
             }
+        }
+
+
+        public string EncryptValue(string Value)
+        {
+
+            int HashValue=0;
+            string Decrypt = "";
+            foreach (var chars in Value)
+            {
+                HashValue = (char.ToUpper(chars) - 64);
+
+                if (HashValue % 2 != 0)
+                {
+                    HashValue = (HashValue * 3) + 1;
+                    Decrypt += "o" + HashValue;
+                }
+                else
+                {
+                    HashValue = HashValue / 2;
+                    Decrypt += "e" + HashValue;
+                }
+
+            }
+
+
+            return Decrypt;
+        }
+
+
+
+        public string[] DecryptValue(string Value)
+        {
+            string[] Result = null;
+            foreach (var chars in Value)
+            {
+                if (char.IsLetter(chars))
+                {
+                    Result = Value.Split(chars);
+                }
+      
+            }
+
+
+            return Result;
         }
     }
 }

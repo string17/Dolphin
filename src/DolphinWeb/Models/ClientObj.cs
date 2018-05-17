@@ -21,7 +21,18 @@ namespace DolphinWeb.Models
         public bool? IsClientActive { get; set; }
     }
 
-
+    public class ClientData
+    {
+        public int ClientId { get; set; }
+        public string ClientName { get; set; }
+        public int RespTime { get; set; }
+        public int RestTime { get; set; }
+        public string Rest1Time { get; set; }
+        public string ClientBanner1 { get; set; }
+        public HttpPostedFileBase ClientBanner { get; set; }
+        public string ClientAlias { get; set; }
+        public bool IsClientActive { get; set; }
+    }
     public class ClientObj
     {
         public int ClientId { get; set; }
@@ -29,8 +40,7 @@ namespace DolphinWeb.Models
         public int RespTime { get; set; }
         public int RestTime { get; set; }
         public string Rest1Time { get; set; }
-        public HttpPostedFileBase ClientBanner { get; set; }
-        public string ExtClientBanner { get; set; }
+        public string ClientBanner { get; set; }
         public string ClientAlias { get; set; }
         public bool IsClientActive { get; set; }
         public string CreatedBy { get; set; }

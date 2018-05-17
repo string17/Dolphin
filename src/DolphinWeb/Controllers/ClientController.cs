@@ -13,6 +13,7 @@ namespace DolphinWeb.Controllers
         private readonly AppLogic _service;
         private readonly AuditTrail auditTrail;
         private readonly SecurityLogic securityLogic;
+        private readonly FileLogic _file;
         private static string ipaddress = new AuditTrail().DetermineIPAddress();
         private readonly string ComputerDetails = new AuditTrail().DetermineCompName(ipaddress);
 
@@ -84,18 +85,17 @@ namespace DolphinWeb.Controllers
         }
 
         [Route("Modifyclient/{ClientId}")]
-        public ActionResult ModifyClient(ClientObj param, int ClientId, FormCollection c)
+        public ActionResult ModifyClient(ClientData param, int ClientId)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-       
+            var banner = new FileLogic().UploadBanner(param.ClientBanner, param.ClientBanner1);
             var client = new ClientObj();
             client.ClientId = ClientId;
             client.ClientAlias = param.ClientAlias;
-            client.ClientBanner = param.ClientBanner;
-            client.ExtClientBanner = c["ClientBanner1"].ToString();
+            client.ClientBanner = banner;
             client.ClientName = param.ClientName;
             client.CreatedBy = User.Identity.Name;
             client.CreatedOn = DateTime.Now;
@@ -104,8 +104,8 @@ namespace DolphinWeb.Controllers
             client.RestTime = param.RestTime;
             client.SystemIp = ipaddress;
             client.Computername = ComputerDetails;
-            bool success = _service.ModifyClient(client);
-            if (success)
+            var success = _service.ModifyClient(client);
+            if (success!=null)
             {
                 ViewBag.SuccessMsg = "Record successfully created";
             }

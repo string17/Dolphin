@@ -261,6 +261,7 @@
     <Compile Include="Services\AppLogic.cs" />
     <Compile Include="Services\AuditTrail.cs" />
     <Compile Include="Services\Base.cs" />
+    <Compile Include="Services\FileLogic.cs" />
     <Compile Include="Services\SecurityLogic.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1230,6 +1231,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="assets\Banner\" />
+    <Folder Include="assets\NewFolder1\" />
     <Folder Include="assets\UserDoc\" />
     <Folder Include="assets\UserImg\" />
     <Folder Include="Views\Account\" />

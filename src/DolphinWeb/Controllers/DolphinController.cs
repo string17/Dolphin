@@ -41,6 +41,8 @@ namespace DolphinWeb.Controllers
             {
                 return View();
             }
+
+
             try
             {
                 var isValid = _service.ValidateUser(param.Username, param.Password, ComputerDetails, ipaddress);
@@ -204,48 +206,13 @@ namespace DolphinWeb.Controllers
             return View();
         }
 
-        public ActionResult NewRole()
-        {
-            return View();
-        }
-
-        public ActionResult NewUser()
-        {
-            return View();
-        }
-
-        public ActionResult ModifyUser()
-        {
-            return View();
-        }
-
-        public ActionResult ModifyRole()
-        {
-            return View();
-        }
-
+       
         public ActionResult ModifyProfile()
         {
             return View();
         }
 
 
-        public ActionResult ListUser()
-        {
-
-            return View();
-        }
-
-        public ActionResult ListRole()
-        {
-            return View();
-        }
-
-
-        public ActionResult RoleMenu()
-        {
-            ViewBag.AllMenu = _service;
-            return View();
-        }
+       
     }
 }
