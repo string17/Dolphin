@@ -36,6 +36,8 @@
                             <th>S/N #</th>
                             <th>Name</th>
                             <th>Alias</th>
+                            <th>Response Time(L)</th>
+                            <th>Resolution Time(L)</th>
                             <th>Response Time</th>
                             <th>Resolution Time</th>
                             <th>Banner</th>
@@ -55,8 +57,11 @@
                                 <td>@n.ClientAlias</td>
                                 <td>@n.RespTime</td>
                                 <td>@n.RestTime</td>
-                                <td>@n.ClientBanner</td>
+                                <td>@n.RespTimeUp</td>
+                                <td>@n.RestTimeUp</td>
+                                <td> <img src="~/assets/Banner/@n.ClientBanner" style="height:30px;width:50px;"></td>
                                 <td><label class="badge badge-success">@(Convert.ToBoolean(n.IsClientActive) ? "Active" : "Inactive")</label></td>
+                                
                                 <td class="noExl">
                                     @*<a data-toggle="modal" onclick="showAccountdetails(this.id);" id="@n.RoleId">Details</a>*@
                                     <div class="dropdown">

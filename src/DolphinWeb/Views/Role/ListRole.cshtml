@@ -48,8 +48,8 @@
                             sn += 1;
                             <tr>
                                 <td>@sn</td>
-                                <td>@n.Title</td>
-                                <td>@n._Desc</td>
+                                <td>@n.RoleName</td>
+                                <td>@n.RoleDesc</td>
                                 <td><label class="badge badge-success">@(Convert.ToBoolean(n.IsRoleActive) ? "Active" : "Inactive")</label></td>
                                 <td class="noExl">
                                     @*<a data-toggle="modal" onclick="showAccountdetails(this.id);" id="@n.RoleId">Details</a>*@

@@ -1,5 +1,6 @@
 'use strict';
 
+
 function initMap() {
   //Map location
   var MapLocation = {
@@ -26,7 +27,7 @@ function initMap() {
     zoom: MapZoom,
     center: MapLocation
   });
-  var iconBase = '../../images/file-icons/';
+  var iconBase = '../../images/sprites/';
   var marker_2 = new google.maps.Marker({
     position: MapLocation,
     map: CutomMarker,

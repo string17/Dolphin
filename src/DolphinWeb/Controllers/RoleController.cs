@@ -30,14 +30,22 @@ namespace DolphinWeb.Controllers
             {
                 return View();
             }
-            bool Role = _service.InsertRole(param);
-            if (Role)
+            var success = _service.InsertRole(param);
+            if (success != null)
             {
-                ViewBag.SuccessMsg = "Successful";
+                if (success.RespCode.Equals("00"))
+                {
+                    TempData["SuccessMsg"] = success.RespMessage;
+                    return RedirectToAction("listrole");
+                }
+                else
+                {
+                    ViewBag.SuccessMsg = success.RespMessage;
+                }
             }
             else
             {
-                ViewBag.SuccessMsg = "Failed";
+                ViewBag.ErrorMsg = "Unsuccessful operation";
             }
             return View();
         }
@@ -45,6 +53,7 @@ namespace DolphinWeb.Controllers
         public ActionResult ListRole()
         {
             ViewBag.Message = "Roles";
+            ViewBag.SuccessMsg = TempData["SuccessMsg"];
             ViewBag.Roles = _service.GetAllRole();
             return View();
         }
@@ -67,16 +76,22 @@ namespace DolphinWeb.Controllers
             {
                 return View();
             }
-            bool success = _service.ModifyRole(param.Title, param._Desc, param.IsRoleActive, Id);
-            if (success)
+            var success = _service.ModifyRole(param.RoleName, param.RoleDesc, param.IsRoleActive, Id);
+            if (success !=null)
             {
-                //ViewBag.SuccessMsg = "Role successfully modified";
-                TempData["SuccessMsg"] = "Role successfully modified";
-                return RedirectToAction("listrole");
+                if (success.RespCode.Equals("00"))
+                {
+                    TempData["SuccessMsg"] = success.RespMessage;
+                    return RedirectToAction("listrole");
+                }
+                else
+                {
+                    ViewBag.ErrorMsg = success.RespMessage;
+                }
             }
             else
             {
-                ViewBag.ErrorMsg = "Role modification failed";
+                ViewBag.ErrorMsg = "Unsuccessful operation";
             }
             return View();
         }

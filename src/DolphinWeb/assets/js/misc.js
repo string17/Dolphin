@@ -52,6 +52,9 @@
         if ($('.chats').length) {
           const chatsScroll = new PerfectScrollbar('.chats');
         }
+        if ($('.scroll-container').length) {
+          const ScrollContainer = new PerfectScrollbar('.scroll-container');
+        }
         if (body.hasClass("sidebar-fixed")) {
           var fixedSidebarScroll = new PerfectScrollbar('#sidebar .nav');
         }
@@ -67,31 +70,7 @@
     });
 
     //checkbox and radios
-    $(".form-check label,.form-radio label").append('<i class="input-helper"></i>');
+    $(".form-check .form-check-label,.form-radio .form-check-label").not(".todo-form-check .form-check-label").append('<i class="input-helper"></i>');
 
-    //fullscreen
-    $("#fullscreen-button").on("click", function toggleFullScreen() {
-      if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
-        if (document.documentElement.requestFullScreen) {
-          document.documentElement.requestFullScreen();
-        } else if (document.documentElement.mozRequestFullScreen) {
-          document.documentElement.mozRequestFullScreen();
-        } else if (document.documentElement.webkitRequestFullScreen) {
-          document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-        } else if (document.documentElement.msRequestFullscreen) {
-          document.documentElement.msRequestFullscreen();
-        }
-      } else {
-        if (document.cancelFullScreen) {
-          document.cancelFullScreen();
-        } else if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen();
-        } else if (document.webkitCancelFullScreen) {
-          document.webkitCancelFullScreen();
-        } else if (document.msExitFullscreen) {
-          document.msExitFullscreen();
-        }
-      }
-    })
   });
 })(jQuery);

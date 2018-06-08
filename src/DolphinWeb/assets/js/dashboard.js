@@ -1,489 +1,231 @@
 (function($) {
   'use strict';
   $(function() {
-    if ($("#chart-activity").length) {
-      var areaData = {
-        labels: ["1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"],
-        datasets: [{
-            data: [60, 63, 68, 53, 52, 53, 42, 47, 45, 42, 49, 42, 48, 46, 41, 45],
-            backgroundColor: [
-              '#D6EEF3'
-            ],
+    if ($('#dashoard-area-chart').length) {
+      var lineChartCanvas = $("#dashoard-area-chart").get(0).getContext("2d");
+      var data = {
+        labels: ["2013", "2014", "2014", "2015", "2016", "2017", "2018"],
+        datasets: [
+          {
+            label: 'Target',
+            data: [0, 6, 1, 6, 1, 4, 0],
+            backgroundColor: 'rgba(130, 83, 235, 0.6)',
             borderColor: [
-              '#1DBFD3'
+              'rgba(130, 83, 235, 0.6)'
             ],
             borderWidth: 2,
-            fill: 'origin',
+            fill: true
           },
           {
-            data: [75, 93, 89, 93, 105, 93, 82, 89, 95, 111, 93, 85, 75, 96, 91, 85],
-            backgroundColor: [
-              '#ffdee0'
-            ],
+            label: 'Profit',
+            data: [0, 3, 5, 1, 3, 2, 0],
+            backgroundColor: 'rgba(56, 213, 122, 0.6)',
             borderColor: [
-              '#ff5161'
+              'rgba(56, 213, 122, 0.6)'
             ],
             borderWidth: 2,
-            fill: 'origin',
+            fill: true
           }
         ]
       };
-      var areaOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          filler: {
-            propagate: false
-          }
-        },
+      var options = {
         scales: {
+          yAxes: [{
+            ticks: {
+              min: 0,
+              beginAtZero: true,
+              stepSize: 1,
+              fontColor: "rgba(0, 0, 0, 0.3)"
+            },
+            gridLines: {
+              color: "rgba(0, 0, 0, 0.03)"
+            }
+          }],
           xAxes: [{
             display: false,
             gridLines: {
-              lineWidth: 0,
-              color: "rgba(255,255,255,0)"
-            }
-          }],
-          yAxes: [{
-            display: false,
-            ticks: {
-              display: false,
-              autoSkip: false,
-              maxRotation: 0,
-              stepSize: 15,
-              min: 0
+              color: "rgba(0, 0, 0, 0)",
+              display: false
             }
           }]
         },
         legend: {
           display: false
         },
-        tooltips: {
-          enabled: true
-        },
         elements: {
-          line: {
-            tension: 0
-          },
           point: {
-            radius: 0
+            radius: 2
           }
-        }
-      }
-      var activityChartCanvas = $("#chart-activity").get(0).getContext("2d");
-      var activityChart = new Chart(activityChartCanvas, {
+        },
+        stepsize: 100
+      };
+      var lineChart = new Chart(lineChartCanvas, {
         type: 'line',
-        data: areaData,
-        options: areaOptions
+        data: data,
+        options: options
       });
     }
-    if ($("#star-rating").length) {
-      $('#star-rating').barrating({
-        theme: 'fontawesome-stars',
-        showSelectedRating: false,
-        initialRating: '4',
-      });
-    }
-    if ($("#purchase-chart").length) {
-      $("#purchase-chart").sparkline('html', {
-        enableTagOptions: true,
-        type: 'line',
-        width: '100%',
-        height: '50',
-        lineColor: '#00b9b0',
-        fillColor: 'rgba(0, 185, 176,0.4)',
-        lineWidth: 2,
-        chartRangeMin: 0,
-        spotColor: false,
-        minSpotColor: false,
-        maxSpotColor: false
-      });
-    }
-    if ($("#time-chart").length) {
-      $("#time-chart").sparkline('html', {
-        enableTagOptions: true,
-        type: 'line',
-        width: '100%',
-        height: '50',
-        fillColor: '#8dc799',
-        lineColor: '#46c35f',
-        lineWidth: 2,
-        chartRangeMin: 0,
-        spotColor: false,
-        minSpotColor: false,
-        maxSpotColor: false
-      });
-    }
-    if ($("#revenueCircle1").length) {
-      var bar = new ProgressBar.Circle(revenueCircle1, {
-        color: '#000',
-        // This has to be the same size as the maximum width to
-        // prevent clipping
-        strokeWidth: 6,
-        trailWidth: 6,
-        easing: 'easeInOut',
-        duration: 1400,
-        text: {
-          autoStyleContainer: false
-        },
-        from: {
-          color: '#d6d6d7',
-          width: 6
-        },
-        to: {
-          color: '#f90000',
-          width: 6
-        },
-        // Set default step function for all animate calls
-        step: function(state, circle) {
-          circle.path.setAttribute('stroke', state.color);
-          circle.path.setAttribute('stroke-width', state.width);
-
-          var value = Math.round(circle.value() * 100);
-          if (value === 0) {
-            circle.setText('');
-          } else {
-            circle.setText('');
-          }
-
-        }
-      });
-
-      bar.text.style.fontSize = '1.5rem';
-      bar.animate(.65); // Number from 0.0 to 1.0
-    }
-    if ($("#revenueCircle2").length) {
-      var bar = new ProgressBar.Circle(revenueCircle2, {
-        color: '#000',
-        // This has to be the same size as the maximum width to
-        // prevent clipping
-        strokeWidth: 6,
-        trailWidth: 6,
-        easing: 'easeInOut',
-        duration: 1400,
-        text: {
-          autoStyleContainer: false
-        },
-        from: {
-          color: '#d6d6d7',
-          width: 6
-        },
-        to: {
-          color: '#ff9f00',
-          width: 6
-        },
-        // Set default step function for all animate calls
-        step: function(state, circle) {
-          circle.path.setAttribute('stroke', state.color);
-          circle.path.setAttribute('stroke-width', state.width);
-
-          var value = Math.round(circle.value() * 100);
-          if (value === 0) {
-            circle.setText('');
-          } else {
-            circle.setText('');
-          }
-
-        }
-      });
-
-      bar.text.style.fontSize = '1.5rem';
-      bar.animate(.80); // Number from 0.0 to 1.0
-    }
-    if ($("#revenueCircle3").length) {
-      var bar = new ProgressBar.Circle(revenueCircle3, {
-        color: '#000',
-        // This has to be the same size as the maximum width to
-        // prevent clipping
-        strokeWidth: 16,
-        trailWidth: 16,
-        easing: 'easeInOut',
-        duration: 1400,
-        from: {
-          color: '#e9ebef',
-          width: 16
-        },
-        to: {
-          color: '#ffa000',
-          width: 16
-        },
-        // Set default step function for all animate calls
-        step: function(state, circle) {
-          circle.path.setAttribute('stroke', state.color);
-          circle.path.setAttribute('stroke-width', state.width);
-
-          var value = Math.round(circle.value() * 100);
-          if (value === 0) {
-            circle.setText('');
-          } else {
-            circle.setText('');
-          }
-
-        }
-      });
-
-      bar.text.style.fontSize = '1.5rem';
-      bar.animate(.63); // Number from 0.0 to 1.0
-    }
-    if ($("#areaChart_1").length) {
-      var areaChartCanvas = $("#areaChart_1").get(0).getContext("2d");
-      var areaChart = new Chart(areaChartCanvas, {
-        type: 'line',
+    if ($("#DashboardBarChart-1").length) {
+      var barChartCanvas = $("#DashboardBarChart-1").get(0).getContext("2d");
+      var barChart = new Chart(barChartCanvas, {
+        type: 'bar',
         data: {
-          labels: ["2013", "2014", "2015", "2016", "2017"],
+          labels: ["2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"],
           datasets: [{
             label: '# of Votes',
-            data: [0, 9, 1, 4, 2, 0],
+            data: [6, 9, 12, 8, 11, 13, 5, 23, 29, 20],
             backgroundColor: [
-              'rgba(244,162,0,0.2)'
+              'rgb(233,233,233)',
+              'rgb(233,233,233)',
+              'rgb(233,233,233)',
+              'rgb(233,233,233)',
+              '#08d26f',
+              '#08d26f',
+              '#08d26f',
+              '#08d26f',
+              '#08d26f',
+              '#08d26f'
             ],
             borderColor: [
-              'rgb(244,162,0)'
+              'rgb(233,233,233)',
+              'rgb(233,233,233)',
+              'rgb(233,233,233)',
+              'rgb(233,233,233)',
+              'rgba(56, 213, 122, 0.2)',
+              'rgba(56, 213, 122, 0.2)',
+              'rgba(56, 213, 122, 0.2)',
+              'rgba(56, 213, 122, 0.2)',
+              'rgba(56, 213, 122, 0.2)',
+              'rgba(56, 213, 122, 0.2)'
             ],
-            borderWidth: 1,
-            fill: true, // 3: no fill
-          }]
-        },
-        options: {
-          maintainAspectRatio: false,
-          ticks: {
-            beginAtZero: true
-          },
-          tooltips: {
-            enabled: false
-          },
-          elements: {
-            line: {
-              tension: 0
-            }
-          },
-          legend: {
-            display: false
-          },
-          scales: {
-            xAxes: [{
-              display: false,
-              gridLines: {
-                display: false
-              }
-            }],
-            yAxes: [{
-              display: false,
-              gridLines: {
-                display: false
-              }
-            }]
-          }
-        }
-      });
-    }
-    if ($("#areaChart_2").length) {
-      var areaChartCanvas = $("#areaChart_2").get(0).getContext("2d");
-      var areaChart = new Chart(areaChartCanvas, {
-        type: 'line',
-        data: {
-          labels: ["2013", "2014", "2015", "2016", "2017"],
-          datasets: [{
-            label: '# of Votes',
-            data: [0, 2, 9, 1, 5, 0],
-            backgroundColor: [
-              'rgba(73,147,222,0.2)'
-            ],
-            borderColor: [
-              'rgba(73,147,222,1)'
-            ],
-            borderWidth: 1,
-            fill: true, // 3: no fill
-          }]
-        },
-        options: {
-          maintainAspectRatio: false,
-          ticks: {
-            beginAtZero: true
-          },
-          tooltips: {
-            enabled: false
-          },
-          elements: {
-            line: {
-              tension: 0
-            }
-          },
-          legend: {
-            display: false
-          },
-          scales: {
-            xAxes: [{
-              display: false,
-              gridLines: {
-                display: false
-              }
-            }],
-            yAxes: [{
-              display: false,
-              gridLines: {
-                display: false
-              }
-            }]
-          }
-        }
-      });
-    }
-    if ($("#areaChart_3").length) {
-      var areaChartCanvas = $("#areaChart_3").get(0).getContext("2d");
-      var areaChart = new Chart(areaChartCanvas, {
-        type: 'line',
-        data: {
-          labels: ["2013", "2014", "2015", "2016", "2017"],
-          datasets: [{
-            label: '# of Votes',
-            data: [0, 7, 4, 9, 5, 0],
-            backgroundColor: [
-              'rgba(42,199,177,0.2)'
-            ],
-            borderColor: [
-              'rgba(42,199,177,1)'
-            ],
-            borderWidth: 1,
-            fill: true, // 3: no fill
-          }]
-        },
-        options: {
-          maintainAspectRatio: false,
-          ticks: {
-            beginAtZero: true
-          },
-          tooltips: {
-            enabled: false
-          },
-          elements: {
-            line: {
-              tension: 0
-            }
-          },
-          legend: {
-            display: false
-          },
-          scales: {
-            xAxes: [{
-              display: false,
-              gridLines: {
-                display: false
-              }
-            }],
-            yAxes: [{
-              display: false,
-              gridLines: {
-                display: false
-              }
-            }]
-          }
-        }
-      });
-    }
-    if ($("#areaChart_4").length) {
-      var areaChartCanvas = $("#areaChart_4").get(0).getContext("2d");
-      var areaChart = new Chart(areaChartCanvas, {
-        type: 'line',
-        data: {
-          labels: ["2013", "2014", "2015", "2016", "2017"],
-          datasets: [{
-            label: '# of Votes',
-            data: [0, 9, 2, 7, 1, 0],
-            backgroundColor: [
-              'rgba(248,0,130,0.2)'
-            ],
-            borderColor: [
-              'rgba(248,0,130,1)'
-            ],
-            borderWidth: 1,
-            fill: true, // 3: no fill
-          }]
-        },
-        options: {
-          maintainAspectRatio: false,
-          ticks: {
-            beginAtZero: true
-          },
-          tooltips: {
-            enabled: false
-          },
-          elements: {
-            line: {
-              tension: 0
-            }
-          },
-          legend: {
-            display: false
-          },
-          scales: {
-            xAxes: [{
-              display: false,
-              gridLines: {
-                display: false
-              }
-            }],
-            yAxes: [{
-              display: false,
-              gridLines: {
-                display: false
-              }
-            }]
-          }
-        }
-      });
-    }
-    if ($("#areaChart_5").length) {
-      var areaChartCanvas = $("#areaChart_5").get(0).getContext("2d");
-      var areaChart = new Chart(areaChartCanvas, {
-        type: 'line',
-        data: {
-          labels: ["2013", "2014", "2015", "2016", "2017"],
-          datasets: [{
-            label: '# of Votes',
-            data: [0, 2, 8, 3, 8, 0],
-            backgroundColor: [
-              'rgba(58,132,218,0.2)'
-            ],
-            borderColor: [
-              'rgba(58,132,218,1)'
-            ],
-            borderWidth: 1,
-            fill: true, // 3: no fill
+            borderWidth: 1
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          ticks: {
-            beginAtZero: true
-          },
-          tooltips: {
-            enabled: false
-          },
-          elements: {
-            line: {
-              tension: 0
-            }
+          scales: {
+            yAxes: [{
+              display: false,
+              ticks: {
+                beginAtZero: true
+              }
+            }],
+            xAxes: [{
+              display: false
+            }]
           },
           legend: {
             display: false
           },
+          elements: {
+            point: {
+              radius: 0
+            }
+          }
+        }
+      });
+    }
+    if ($("#current-chart").length) {
+      var CurrentChartCanvas = $("#current-chart").get(0).getContext("2d");
+      var CurrentChart = new Chart(CurrentChartCanvas, {
+        type: 'bar',
+        data: {
+          labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          datasets: [{
+              label: 'Profit',
+              data: [330, 380, 230, 400, 309, 530, 340, 200],
+              backgroundColor: 'rgba(8, 210 ,111, 1)'
+            },
+            {
+              label: 'Target',
+              data: [600, 600, 600, 600, 600, 600, 600],
+              backgroundColor: 'rgba(247, 247 ,247, 0.8)'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          layout: {
+            padding: {
+              left: 0,
+              right: 0,
+              top: 20,
+              bottom: 0
+            }
+          },
           scales: {
-            xAxes: [{
-              display: false,
-              gridLines: {
-                display: false
-              }
-            }],
             yAxes: [{
               display: false,
               gridLines: {
                 display: false
               }
+            }],
+            xAxes: [{
+              stacked: true,
+              ticks: {
+                beginAtZero: true,
+                fontColor: "rgba(0, 0 ,0, 0.5)"
+              },
+              gridLines: {
+                color: "rgba(0, 0, 0, 0)",
+                display: false
+              },
+              barPercentage: 0.5
             }]
+          },
+          legend: {
+            display: false
+          },
+          elements: {
+            point: {
+              radius: 0
+            }
           }
         }
+      });
+    }
+    if ($('#morris-line-example').length) {
+      Morris.Line({
+        element: 'morris-line-example',
+        lineColors: ['#dadada', '#fb9678'],
+        data: [{
+            y: '2006',
+            a: 50,
+            b: 0
+          },
+          {
+            y: '2007',
+            a: 75,
+            b: 78
+          },
+          {
+            y: '2008',
+            a: 30,
+            b: 12
+          },
+          {
+            y: '2009',
+            a: 35,
+            b: 50
+          },
+          {
+            y: '2010',
+            a: 70,
+            b: 100
+          },
+          {
+            y: '2011',
+            a: 78,
+            b: 65
+          }
+        ],
+        grid: false,
+        xkey: 'y',
+        ykeys: ['a', 'b'],
+        labels: ['Series A', 'Series B'],
+        hideHover: "always"
       });
     }
   });

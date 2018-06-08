@@ -12,11 +12,7 @@
     <div class="col-md-12 d-flex align-items-stretch grid-margin">
       
         <div class="row flex-grow">
-            @*<div class="alert alert-danger" role="alert" style="width:100%; margin:auto">
-                Change a few things up and try submitting again.
-
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            </div>*@
+      
 
             @{if (!String.IsNullOrEmpty(@ViewBag.ErrorMsg))
                 {
@@ -25,13 +21,7 @@
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     </div>
                 }
-                else if (!String.IsNullOrEmpty(ViewBag.SuccessMsg))
-                {
-                    <div class="alert alert-success" role="alert" style="margin:auto;width:100%;">
-                        @ViewBag.SuccessMsg
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    </div>
-                }
+         
             }
 
             <div class="col-12 stretch-card">
@@ -48,7 +38,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Title</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="Title" value="@((Model_Roles != null) ? Model_Roles.Title : string.Empty)" />
+                                            <input type="text" class="form-control" name="RoleName" value="@((Model_Roles != null) ? Model_Roles.RoleName : string.Empty)" />
                                         </div>
                                     </div>
                                 </div>
@@ -75,7 +65,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Description</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" name="_Desc" value="@((Model_Roles != null) ? Model_Roles._Desc : string.Empty)"/>
+                                            <input type="text" class="form-control" name="RoleDesc" value="@((Model_Roles != null) ? Model_Roles.RoleDesc : string.Empty)"/>
                                         </div>
                                     </div>
                                 </div>

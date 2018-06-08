@@ -25,8 +25,7 @@ $(function() {
         'rgba(153, 102, 255, 1)',
         'rgba(255, 159, 64, 1)'
       ],
-      borderWidth: 1,
-      fill: false
+      borderWidth: 1
     }]
   };
   var multiLineData = {
@@ -165,7 +164,11 @@ $(function() {
         'rgba(255, 159, 64, 1)'
       ],
       borderWidth: 1,
-      fill: true, // 3: no fill
+      fill: 'origin', // 0: fill to 'origin'
+      fill: '+2', // 1: fill to dataset 3
+      fill: 1, // 2: fill to dataset 1
+      fill: false, // 3: no fill
+      fill: '-2' // 4: fill to dataset 2
     }]
   };
 
@@ -379,4 +382,23 @@ $(function() {
       options: doughnutPieOptions
     });
   }
+
+  // if ($("#radarChart").length) {
+  //   var myRadarChartCanvas = $("#radarChart").get(0).getContext("2d");
+  //   var myRadarChart = new Chart(ctx, {
+  //     type: 'radar',
+  //     data: {
+  //       labels: ['Running', 'Swimming', 'Eating', 'Cycling'],
+  //       datasets: [{
+  //         data: [20, 10, 4, 2]
+  //       }]
+  //     },
+  //     options = {
+  //       scale: {
+  //         // Hides the scale
+  //         display: false
+  //       }
+  //     }
+  //   });
+  // }
 });

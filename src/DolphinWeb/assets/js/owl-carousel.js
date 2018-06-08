@@ -131,4 +131,16 @@
     });
   }
 
+  if ($('.slide-banners').length) {
+    $('.slide-banners').owlCarousel({
+      loop: true,
+      margin: 0,
+      items: 1,
+      nav: false,
+      dotsContainer: ".nav-container",
+      autoplay: true,
+      autoplayTimeout: 3000
+    });
+  }
+
 })(jQuery);

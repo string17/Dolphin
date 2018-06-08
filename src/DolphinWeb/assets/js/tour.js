@@ -47,6 +47,7 @@
       $('.container-scroller').animate({
         scrollTop: element.offset().top - $('.content-wrapper').offset().top - 70
       }, 10);
+      $('.container-scroller').perfectScrollbar('update');
     }
   });
   if (tour.ended()) {

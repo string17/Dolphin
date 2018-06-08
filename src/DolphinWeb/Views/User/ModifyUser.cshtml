@@ -1,5 +1,228 @@
 ﻿@{
+    DolphinWeb.Services.SecurityLogic PasswordKey = new DolphinWeb.Services.SecurityLogic();
+    IEnumerable<DolphinWeb.Models.ClientResp> Model_Clients = ViewBag.Clients;
+    IEnumerable<DolphinWeb.Models.RoleObj> Model_Roles = ViewBag.Roles;
+    DolphinWeb.Models.UserInfo Model_User = ViewBag.UserDetails;
+
+
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
+
+<div class="row">
+
+    <div class="col-md-12 d-flex align-items-stretch grid-margin">
+
+        <div class="row flex-grow">
+
+
+            @{if (!String.IsNullOrEmpty(@ViewBag.ErrorMsg))
+                {
+                    <div class="alert alert-danger" role="alert" style="margin:auto;width:100%;">
+                        @ViewBag.ErrorMsg
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    </div>
+                }
+
+            }
+
+            <div class="col-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">@ViewBag.Message</h4>
+                        <form class="forms-sample" method="post" action="" id="validate-form" enctype="multipart/form-data">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">First Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="FirstName" value="@((Model_User != null) ? Model_User.FirstName : string.Empty)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Middle Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="MiddleName" value="@((Model_User != null) ? Model_User.MiddleName : string.Empty)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Last Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="LastName" value="@((Model_User != null) ? Model_User.LastName : string.Empty)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Email</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" class="form-control" name="Email" value="@((Model_User != null) ? Model_User.Email : string.Empty)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Username</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="UserName" value="@((Model_User != null) ? Model_User.UserName : string.Empty)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Password</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" class="form-control" name="Password" value="@((Model_User != null) ? PasswordKey.DecryptPassword(Model_User.Password) : string.Empty)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Phone Number</label>
+                                        <div class="col-sm-9">
+                                            <input type="tel" class="form-control" name="PhoneNo" value="@((Model_User != null) ? Model_User.PhoneNo : string.Empty)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Sex</label>
+                                        <div class="col-sm-4">
+                                            <div class="form-radio">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" name="Sex" id="membershipRadios1" value="Male" required>
+                                                    Male
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="form-radio">
+                                                <label class="form-check-label">
+                                                    <input type="radio" class="form-check-input" name="Sex" id="membershipRadios2" value="Female">
+                                                    Female
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Institution</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="ClientId" required>
+                                                <option value=@(Model_User.ClientId)>@(Model_User.ClientAlias)</option>
+
+                                                @foreach (var n in Model_Clients)
+                                                {
+                                                    <option value="@n.ClientId">@n.ClientAlias </option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Role</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="RoleId" required>
+                                                <option value=@(Model_User.RoleId)>@(Model_User.RoleName)</option>
+
+                                                @foreach (var n in Model_Roles)
+                                                {
+                                                    <option value="@n.RoleId">@n.RoleName </option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Image</label>
+                                        <div class="col-sm-9">
+                                            <input type="file" name="UserImg" class="file-upload-default">
+                                            <div class="input-group col-xs-12">
+                                                <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                                                <span class="input-group-append">
+                                                    <button class="file-upload-browse btn btn-info" type="button"><i class="mdi mdi-upload"></i>Upload</button>
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control" name="UserImg1" value="@((Model_User != null) ? Model_User.UserImg : string.Empty)" style="display: none;">
+
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Is User Active</label>
+                                        <div class="col-sm-4">
+
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="form-check form-check-flat">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" Value="true" name="IsUserActive">
+
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:15px;">
+
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+
+                                        </div>
+                                        <div class="col-sm-8 pull-right">
+                                            <button type="submit" class="btn btn-primary mr-2"><i class="mdi mdi-cloud-download"></i>Update Record</button>
+                                            <button class="btn btn-light" type="reset"><i class="mdi mdi-refresh"></i>Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 

@@ -11,11 +11,7 @@
     <div class="col-md-12 d-flex align-items-stretch grid-margin">
       
         <div class="row flex-grow">
-            @*<div class="alert alert-danger" role="alert" style="width:100%; margin:auto">
-                Change a few things up and try submitting again.
-
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            </div>*@
+      
 
             @{if (!String.IsNullOrEmpty(@ViewBag.ErrorMsg))
                 {
@@ -24,19 +20,13 @@
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     </div>
                 }
-                else if (!String.IsNullOrEmpty(ViewBag.SuccessMsg))
-                {
-                    <div class="alert alert-success" role="alert" style="margin:auto;width:100%;">
-                        @ViewBag.SuccessMsg
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    </div>
-                }
+             
             }
 
             <div class="col-12 stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Roles</h4>
+                        <h4 class="card-title">@ViewBag.Message</h4>
                         <p class="card-description">
 
                         </p>
@@ -61,8 +51,50 @@
                                     </div>
                                 </div>
                             </div>
+                            <p class="card-description">
 
+                                <b>Lagos</b>
+                            </p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Response Time</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="RespTime" required>
+                                                <option value=@(Model_Client.RespTimeUp)>@(Model_Client.RespTimeUp)</option>
+                                                @{
+                                                    for (int i = 1; i < 10; i++)
+                                                    {
+                                                        <option value=@i> @i</option>
+                                                    }
+                                                }
 
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Resolution Time (Hour)</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="RestTime" required>
+                                                <option value=@(Model_Client.RestTimeUp)>@(Model_Client.RestTimeUp)</option>
+                                                @{
+                                                    for (int i = 1; i < 48; i++)
+                                                    {
+                                                        <option value=@i>@i</option>
+                                                    }
+                                                }
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-description">
+
+                                <b>UpCountry</b>
+                            </p>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group row">
@@ -148,9 +180,9 @@
                                         <div class="col-sm-2">
 
                                         </div>
-                                        <div class="col-sm-7 pull-right">
-                                            <button type="submit" class="btn btn-success mr-2">Update</button>
-                                            <button class="btn btn-light">Cancel</button>
+                                        <div class="col-sm-7 pull-right">                              
+                                            <button type="submit" class="btn btn-primary mr-2"><i class="mdi mdi-cloud-download"></i>Update </button>
+                                            <button class="btn btn-light" type="reset"><i class="mdi mdi-refresh"></i>Cancel</button>
                                         </div>
                                     </div>
                                 </div>

@@ -45,38 +45,35 @@ namespace DolphinWeb.Controllers
 
             try
             {
-                var isValid = _service.ValidateUser(param.Username, param.Password, ComputerDetails, ipaddress);
-                if (isValid != null)
+                var success = _service.ValidateUser(param.Username, param.Password, ComputerDetails, ipaddress);
+                if (success != null)
                 {
-                    if (isValid.RespCode.Equals("00"))
+                    if (success.RespCode.Equals("00"))
                     {
                         FormsAuthentication.SetAuthCookie(param.Username, false);
                         return RedirectToAction("Dashboard", "Dolphin");
                     }
 
-                    else if (isValid.RespCode.Equals("01"))
+                    else if (success.RespCode.Equals("01"))
                     {
                         string Id = securityLogic.EncryptPassword(param.Username);
-                        TempData["ChangePassword"] = "Kindly change your passowrd";
+                        TempData["ChangePassword"] = success.RespMessage;
                         string NewURL = "http://localhost:51310/dolphin/resetpassword?Id=" + Id;
                         Response.Redirect(NewURL, true);
                     }
                     else
                     {
-                        ViewBag.ErrorMsg = isValid.RespMessage;
-                        return View();
+                        ViewBag.ErrorMsg = success.RespMessage;
                     }
                 }
                 else
                 {
                     ViewBag.ErrorMsg = "This service is not available";
-                    return View();
                 }
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMsg = ex.Message;
-                return View();
             }
             return View();
         }
@@ -113,11 +110,18 @@ namespace DolphinWeb.Controllers
         public ActionResult Logout()
         {
             TempData["ProfileMsg"] = TempData["ProfileMsg"];
-            bool userLogout=_service.TerminateSession(User.Identity.Name, ComputerDetails, ipaddress);
-            if (userLogout)
+            var success=_service.TerminateSession(User.Identity.Name, ComputerDetails, ipaddress);
+            if (success != null)
             {
-                FormsAuthentication.SignOut();
-                return RedirectToAction("Index", "Dolphin");
+                if (success.RespCode.Equals("00"))
+                {
+                    FormsAuthentication.SignOut();
+                    return RedirectToAction("Index", "Dolphin");
+                }
+                else
+                {
+                    return View();
+                }
             }
             else
             {
@@ -140,14 +144,21 @@ namespace DolphinWeb.Controllers
             {
                 return View();
             }
-            var forgotPwd = _service.ForgotPassword(param.Email, ComputerDetails, ipaddress);
-            if (forgotPwd.RespCode.Equals("00"))
+            var success = _service.ForgotPassword(param.Email, ComputerDetails, ipaddress);
+            if (success!=null)
             {
-                ViewBag.SuccessMsg = forgotPwd.RespMessage;
+                if (success.RespCode.Equals("00"))
+                {
+                    ViewBag.SuccessMsg = success.RespMessage;
+                }
+                else
+                {
+                    ViewBag.ErrorMsg = success.RespMessage;
+                }
             }
             else
             {
-                ViewBag.ErrorMsg = forgotPwd.RespMessage;
+                ViewBag.ErrorMsg = "Unsuccessful operation";
             }
             return View();
         }
@@ -176,15 +187,22 @@ namespace DolphinWeb.Controllers
             {
                 if(param.Password == param.ConfirmPassword)
                 {
-                    var changePassword = _service.ResetPassword(Id,param.Password,ComputerDetails,ipaddress);
-                    if (changePassword.RespCode.Equals("00"))
+                    var success = _service.ResetPassword(Id,param.Password,ComputerDetails,ipaddress);
+                    if (success!=null)
                     {
-                        TempData["Success"] = "Kindly Login with the new password";
-                        return RedirectToAction("login");
+                        if (success.RespCode.Equals("00"))
+                        {
+                            TempData["Success"] = success.RespMessage;
+                            return RedirectToAction("login");
+                        }
+                        else
+                        {
+                            ViewBag.ErrorMsg = success.RespMessage;
+                        }
                     }
                     else
                     {
-                        ViewBag.ErrorMsg = changePassword.RespMessage;
+                        ViewBag.ErrorMsg = "Unsuccessful operation";
                     }
                 }
                 else

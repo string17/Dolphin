@@ -17,10 +17,11 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from www.urbanui.com/pearl-admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Apr 2018 19:48:59 GMT -->
+<!-- Mirrored from www.urbanui.com/radiant/jquery/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 21 May 2018 14:43:09 GMT -->
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -33,13 +34,11 @@
     <link rel="stylesheet" href="~/assets/vendors/css/vendor.bundle.addons.css">
     <!-- endinject -->
     <!-- plugin css for this page -->
-    <link rel="stylesheet" href="~/assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="~/assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="~/assets/images/icon-s.jpg" />
-
 
 
     <style>
@@ -57,194 +56,195 @@
             background-color: rgba(0,0,0,0.4);
         }
     </style>
-
 </head>
 <body>
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
-        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row navbar-success">
-            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <a class="navbar-brand brand-logo" href="index.html"><img src="~/assets/images/logo-s.jpg" alt="logo" style="width:70px;height:50px;" /></a>
-                <a class="navbar-brand brand-logo-mini" href="#"><img src="~/assets/images/logo-s.jpg" alt="logo" style="width:70px;height:50px;"/></a>
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+                <a class="navbar-brand brand-logo" href="index-2.html"></a>
+                <a class="navbar-brand brand-logo-mini" href="index-2.html"></a>
             </div>
-            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+            <div class="navbar-menu-wrapper d-flex align-items-center">
                 <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                     <span class="mdi mdi-menu"></span>
                 </button>
-                <ul class="navbar-nav">
-                    <li class="nav-item d-none d-lg-block">
-                        <a class="nav-link">
-                            <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
-                        </a>
+                <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Schedule <span class="badge badge-primary ml-1">New</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="#" class="nav-link"><i class="mdi mdi-elevation-rise"></i>Reports</a>
                     </li>
                     <li class="nav-item">
-                        <form class="nav-link form-inline mt-2 mt-md-0 d-none d-lg-flex search">
-                            <input type="text" class="form-control" placeholder="Search for something...">
-                        </form>
+                        <a href="#" class="nav-link"><i class="mdi mdi-bookmark-plus-outline"></i>Score</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav navbar-nav-right">
-                    <li class="nav-item dropdown d-none d-lg-flex">
-                        <a class="nav-link dropdown-toggle" id="languageDropdown" href="#" data-toggle="dropdown">
-                            English
-                        </a>
-                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="languageDropdown">
-                            <a class="dropdown-item" href="#">
-                                French
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
-                                Spain
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
-                                Latin
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
-                                Japanese
-                            </a>
-                        </div>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                            <i class="mdi mdi-email-outline"></i>
-                            <span class="count bg-warning">5</span>
+                            <i class="mdi mdi-message-text-outline"></i>
+                            <span class="count bg-warning">2</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-                            <h6 class="p-3 mb-0">Messages</h6>
+                            <div class="dropdown-item py-3">
+                                <p class="mb-0 font-weight-medium float-left">
+                                    You have 7 unread mails
+                                </p>
+                                <span class="badge badge-inverse-info badge-pill float-right">View all</span>
+                            </div>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="images/faces/face4.jpg" alt="image" class="profile-pic">
+                                    <img src="~/assets/images/faces/face4.jpg" alt="image" class="profile-pic">
                                 </div>
-                                <div class="preview-item-content">
-                                    <h6 class="preview-subject ellipsis">Mark sent you a message</h6>
-                                    <p class="text-muted">
-                                        1 Minutes ago
+                                <div class="preview-item-content flex-grow">
+                                    <h6 class="preview-subject ellipsis font-weight-normal text-dark mb-1">
+                                        David Grey
+                                        <span class="float-right font-weight-light small-text text-gray">1 Minutes ago</span>
+                                    </h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        The meeting is cancelled
                                     </p>
                                 </div>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="images/faces/face2.jpg" alt="image" class="profile-pic">
+                                    <img src="~/assets/images/faces/face2.jpg" alt="image" class="profile-pic">
                                 </div>
-                                <div class="preview-item-content">
-                                    <h6 class="preview-subject ellipsis">Cregh sent you a message</h6>
-                                    <p class="text-muted">
-                                        15 Minutes ago
+                                <div class="preview-item-content flex-grow">
+                                    <h6 class="preview-subject ellipsis font-weight-normal text-dark mb-1">
+                                        Tim Cook
+                                        <span class="float-right font-weight-light small-text text-gray">15 Minutes ago</span>
+                                    </h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        New product launch
                                     </p>
                                 </div>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="images/faces/face3.jpg" alt="image" class="profile-pic">
+                                    <img src="~/assets/images/faces/face3.jpg" alt="image" class="profile-pic">
                                 </div>
-                                <div class="preview-item-content">
-                                    <h6 class="preview-subject ellipsis">Profile picture updated</h6>
-                                    <p class="text-muted">
-                                        18 Minutes ago
+                                <div class="preview-item-content flex-grow">
+                                    <h6 class="preview-subject ellipsis font-weight-normal text-dark mb-1">
+                                        Johnson
+                                        <span class="float-right font-weight-light small-text text-gray">18 Minutes ago</span>
+                                    </h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        Upcoming board meeting
                                     </p>
                                 </div>
                             </a>
-                            <div class="dropdown-divider"></div>
-                            <h6 class="p-3 mb-0 text-center">4 new messages</h6>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
                             <i class="mdi mdi-bell-outline"></i>
-                            <span class="count bg-danger">7</span>
+                            <span class="count bg-success">4</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                            <h6 class="p-3 mb-0">Notifications</h6>
+                            <a class="dropdown-item py-3">
+                                <p class="mb-0 font-weight-medium float-left">
+                                    You have 4 new notifications
+                                </p>
+                                <span class="badge badge-pill badge-inverse-info float-right">View all</span>
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-success">
-                                        <i class="mdi mdi-calendar"></i>
+                                    <div class="preview-icon bg-inverse-success">
+                                        <i class="mdi mdi-alert-circle-outline mx-0"></i>
                                     </div>
                                 </div>
                                 <div class="preview-item-content">
-                                    <h6 class="preview-subject">Event today</h6>
-                                    <p class="text-muted ellipsis">
-                                        Just a reminder that you have an event today
+                                    <h6 class="preview-subject font-weight-normal text-dark mb-1">Application Error</h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        Just now
                                     </p>
                                 </div>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-warning">
-                                        <i class="mdi mdi-settings"></i>
+                                    <div class="preview-icon bg-inverse-warning">
+                                        <i class="mdi mdi-comment-text-outline mx-0"></i>
                                     </div>
                                 </div>
                                 <div class="preview-item-content">
-                                    <h6 class="preview-subject">Settings</h6>
-                                    <p class="text-muted ellipsis">
-                                        Update dashboard
+                                    <h6 class="preview-subject font-weight-normal text-dark mb-1">Settings</h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        Private message
                                     </p>
                                 </div>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-info">
-                                        <i class="mdi mdi-link-variant"></i>
+                                    <div class="preview-icon bg-inverse-info">
+                                        <i class="mdi mdi-email-outline mx-0"></i>
                                     </div>
                                 </div>
                                 <div class="preview-item-content">
-                                    <h6 class="preview-subject">Launch Admin</h6>
-                                    <p class="text-muted ellipsis">
-                                        New admin wow!
+                                    <h6 class="preview-subject font-weight-normal text-dark mb-1">New user registration</h6>
+                                    <p class="font-weight-light small-text mb-0">
+                                        2 days ago
                                     </p>
                                 </div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <h6 class="p-3 mb-0 text-center">See all notifications</h6>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle nav-profile" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                            <img src="images/faces/face1.jpg" alt="image">
-                            <span class="d-none d-lg-inline">Daniel Russiel</span>
-                        </a>
-                        <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item" href="#">
-                                <i class="mdi mdi-cached mr-2 text-success"></i>
-                                Activity Log
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
-                                <i class="mdi mdi-logout mr-2 text-primary"></i>
-                                Signout
                             </a>
                         </div>
                     </li>
-                    <li class="nav-item nav-settings d-none d-lg-block">
+                    <li class="nav-item d-none d-lg-block color-setting">
                         <a class="nav-link" href="#">
-                            <i class="mdi mdi-backburger"></i>
+                            <i class="mdi mdi-tune"></i>
                         </a>
+                    </li>
+                    <li class="nav-item dropdown d-none d-xl-inline-block">
+                        <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <span class="mr-3">Hello, @_displayName.FirstName !</span><img class="img-xs rounded-circle" src="~/assets/UserImg/@_displayName.UserImg" alt="Profile image">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                            <a class="dropdown-item p-0">
+                                <div class="d-flex border-bottom">
+                                    <div class="py-3 px-4 d-flex align-items-center justify-content-center"><i class="mdi mdi-bookmark-plus-outline mr-0 text-gray"></i></div>
+                                    <div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right"><i class="mdi mdi-account-outline mr-0 text-gray"></i></div>
+                                    <div class="py-3 px-4 d-flex align-items-center justify-content-center"><i class="mdi mdi-alarm-check mr-0 text-gray"></i></div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item mt-2">
+                                Manage Accounts
+                            </a>
+                            <a class="dropdown-item">
+                                Change Password
+                            </a>
+                            <a class="dropdown-item">
+                                Check Inbox
+                            </a>
+                            <a class="dropdown-item" href="@Url.Action("Logout")" onclick="pageLoader()">
+                                Sign Out
+                            </a>
+                        </div>
                     </li>
                 </ul>
                 <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-                    <span class="mdi mdi-menu"></span>
+                    <span class="icon-menu"></span>
                 </button>
             </div>
         </nav>
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <!-- partial:partials/_settings-panel.html -->
-            @*<div class="theme-setting-wrapper">
-                <div id="settings-trigger"><i class="mdi mdi-settings"></i></div>
+            <div class="theme-setting-wrapper">
                 <div id="theme-settings" class="settings-panel">
                     <i class="settings-close mdi mdi-close"></i>
-                    <p class="settings-heading">SIDEBAR SKINS</p>
-                    <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
-                    <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
-                    <p class="settings-heading mt-2">HEADER SKINS</p>
+                    <div class="d-flex align-items-center justify-content-between border-bottom">
+                        <p class="settings-heading font-weight-bold border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Template Skins</p>
+                    </div>
+                    <div class="sidebar-bg-options selected" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+                    <div class="sidebar-bg-options" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+                    <p class="settings-heading font-weight-bold mt-2">Header Skins</p>
                     <div class="color-tiles mx-0 px-4">
                         <div class="tiles primary"></div>
                         <div class="tiles success"></div>
@@ -256,187 +256,90 @@
                         <div class="tiles default"></div>
                     </div>
                 </div>
-            </div>*@
+            </div>
             <div id="right-sidebar" class="settings-panel">
                 <i class="settings-close mdi mdi-close"></i>
-                <ul class="nav nav-tabs" id="setting-panel" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="todo-tab" data-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+                <div class="d-flex align-items-center justify-content-between border-bottom">
+                    <p class="settings-heading font-weight-bold border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
+                </div>
+                <ul class="chat-list">
+                    <li class="list active">
+                        <div class="profile"><img src="~/assets/images/faces/face1.jpg" alt="image"><span class="online"></span></div>
+                        <div class="info">
+                            <p>Thomas Douglas</p>
+                            <p>Available</p>
+                        </div>
+                        <small class="text-muted my-auto">19 min</small>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="chats-tab" data-toggle="tab" href="#chats-section" role="tab" aria-controls="chats-section">CHATS</a>
+                    <li class="list">
+                        <div class="profile"><img src="~/assets/images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
+                        <div class="info">
+                            <div class="wrapper d-flex">
+                                <p>Catherine</p>
+                            </div>
+                            <p>Away</p>
+                        </div>
+                        <div class="badge badge-success badge-pill my-auto mx-2">4</div>
+                        <small class="text-muted my-auto">23 min</small>
+                    </li>
+                    <li class="list">
+                        <div class="profile"><img src="~/assets/images/faces/face3.jpg" alt="image"><span class="online"></span></div>
+                        <div class="info">
+                            <p>Daniel Russell</p>
+                            <p>Available</p>
+                        </div>
+                        <small class="text-muted my-auto">14 min</small>
+                    </li>
+                    <li class="list">
+                        <div class="profile"><img src="~/assets/images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
+                        <div class="info">
+                            <p>James Richardson</p>
+                            <p>Away</p>
+                        </div>
+                        <small class="text-muted my-auto">2 min</small>
+                    </li>
+                    <li class="list">
+                        <div class="profile"><img src="~/assets/images/faces/face5.jpg" alt="image"><span class="online"></span></div>
+                        <div class="info">
+                            <p>Madeline Kennedy</p>
+                            <p>Available</p>
+                        </div>
+                        <small class="text-muted my-auto">5 min</small>
+                    </li>
+                    <li class="list">
+                        <div class="profile"><img src="~/assets/images/faces/face6.jpg" alt="image"><span class="online"></span></div>
+                        <div class="info">
+                            <p>Sarah Graves</p>
+                            <p>Available</p>
+                        </div>
+                        <small class="text-muted my-auto">47 min</small>
                     </li>
                 </ul>
-                <div class="tab-content" id="setting-content">
-                    <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
-                        <div class="add-items d-flex px-3 mb-0">
-                            <form class="form w-100">
-                                <div class="form-group d-flex">
-                                    <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
-                                    <button type="submit" class="add btn btn-primary todo-list-add-btn">Add</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="list-wrapper px-3">
-                            <ul class="d-flex flex-column-reverse todo-list">
-                                <li>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="checkbox" type="checkbox">
-                                            Team review meeting at 3.00 PM
-                                        </label>
-                                    </div>
-                                    <i class="remove mdi mdi-close-circle-outline"></i>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="checkbox" type="checkbox">
-                                            Prepare for presentation
-                                        </label>
-                                    </div>
-                                    <i class="remove mdi mdi-close-circle-outline"></i>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="checkbox" type="checkbox">
-                                            Resolve all the low priority tickets due today
-                                        </label>
-                                    </div>
-                                    <i class="remove mdi mdi-close-circle-outline"></i>
-                                </li>
-                                <li class="completed">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="checkbox" type="checkbox" checked>
-                                            Schedule meeting for next week
-                                        </label>
-                                    </div>
-                                    <i class="remove mdi mdi-close-circle-outline"></i>
-                                </li>
-                                <li class="completed">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            <input class="checkbox" type="checkbox" checked>
-                                            Project review
-                                        </label>
-                                    </div>
-                                    <i class="remove mdi mdi-close-circle-outline"></i>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="events py-4 border-bottom px-3">
-                            <div class="wrapper d-flex mb-2">
-                                <i class="mdi mdi-circle-outline text-primary mr-2"></i>
-                                <span>Feb 11 2018</span>
-                            </div>
-                            <p class="mb-0 font-weight-thin text-gray">Creating component page</p>
-                            <p class="text-gray mb-0">build a js based app</p>
-                        </div>
-                        <div class="events pt-4 px-3">
-                            <div class="wrapper d-flex mb-2">
-                                <i class="mdi mdi-circle-outline text-primary mr-2"></i>
-                                <span>Feb 7 2018</span>
-                            </div>
-                            <p class="mb-0 font-weight-thin text-gray">Meeting with Alisa</p>
-                            <p class="text-gray mb-0 ">Call Sarah Graves</p>
-                        </div>
-                    </div>
-                    <!-- To do section tab ends -->
-                    <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
-                        <div class="d-flex align-items-center justify-content-between border-bottom">
-                            <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
-                            <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See All</small>
-                        </div>
-                        <ul class="chat-list">
-                            <li class="list active">
-                                <div class="profile"><img src="images/faces/face1.jpg" alt="image"><span class="online"></span></div>
-                                <div class="info">
-                                    <p>Thomas Douglas</p>
-                                    <p>Available</p>
-                                </div>
-                                <small class="text-muted my-auto">19 min</small>
-                            </li>
-                            <li class="list">
-                                <div class="profile"><img src="images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
-                                <div class="info">
-                                    <div class="wrapper d-flex">
-                                        <p>Catherine</p>
-                                    </div>
-                                    <p>Away</p>
-                                </div>
-                                <div class="badge badge-success badge-pill my-auto mx-2">4</div>
-                                <small class="text-muted my-auto">23 min</small>
-                            </li>
-                            <li class="list">
-                                <div class="profile"><img src="images/faces/face3.jpg" alt="image"><span class="online"></span></div>
-                                <div class="info">
-                                    <p>Daniel Russell</p>
-                                    <p>Available</p>
-                                </div>
-                                <small class="text-muted my-auto">14 min</small>
-                            </li>
-                            <li class="list">
-                                <div class="profile"><img src="images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
-                                <div class="info">
-                                    <p>James Richardson</p>
-                                    <p>Away</p>
-                                </div>
-                                <small class="text-muted my-auto">2 min</small>
-                            </li>
-                            <li class="list">
-                                <div class="profile"><img src="images/faces/face5.jpg" alt="image"><span class="online"></span></div>
-                                <div class="info">
-                                    <p>Madeline Kennedy</p>
-                                    <p>Available</p>
-                                </div>
-                                <small class="text-muted my-auto">5 min</small>
-                            </li>
-                            <li class="list">
-                                <div class="profile"><img src="images/faces/face6.jpg" alt="image"><span class="online"></span></div>
-                                <div class="info">
-                                    <p>Sarah Graves</p>
-                                    <p>Available</p>
-                                </div>
-                                <small class="text-muted my-auto">47 min</small>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- chat tab ends -->
-                </div>
             </div>
             <!-- partial -->
             <!-- partial:partials/_sidebar.html -->
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item nav-profile">
-                        <div class="nav-link d-flex">
-                            <div class="profile-image">
-                                <img src="~/assets/images/faces/face1.jpg" alt="image" />
-                                <span class="online-status online"></span> <!--change class online to offline or busy as needed-->
-                            </div>
+                        <div class="nav-link">
+                            <div class="profile-image"> <img src="~/assets/UserImg/@_displayName.UserImg" alt="image" /> <span class="online-status online"></span> </div>
                             <div class="profile-name">
-                                <p class="name">
-                                    @_displayName.FirstName @_displayName.MiddleName @_displayName.LastName 
-                                </p>
-                                <p class="designation">
-                                   @_displayName.Title
-                                </p>
+                                <p class="name">@_displayName.FirstName @_displayName.MiddleName @_displayName.LastName </p>
+                                <p class="designation">@_displayName.Title</p>
                                 @currentTime
                             </div>
+       
                         </div>
                     </li>
-                   
-               
+
                     @{ if (_menu == null)
             {
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="icon-layout menu-icon"></i>
-                        <span class="menu-title">No Menu</span>
-                    </a>
-                </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="icon-layout menu-icon"></i>
+                                    <span class="menu-title">No Menu</span>
+                                </a>
+                            </li>
                         }
                         else
 
@@ -452,74 +355,63 @@
                                     var childmenu = _menu.Where(menu => menu.MenuId == parentMenu.ItemId);
                                     <li class="nav-item">
                                         <a class="nav-link" data-toggle="collapse" href="#@parentMenu.ItemAlias" aria-expanded="false" aria-controls="@parentMenu.ItemAlias">
-                                            <i class="fa @parentMenu.ItemIcon"></i>
+                                        <img class="menu-icon" src="~/assets/images/menu_icons/@parentMenu.ItemIcon" alt="menu icon">
                                             <span class="menu-title">&nbsp;&nbsp;&nbsp;&nbsp;@parentMenu.ItemName</span>
-                                                <i class="menu-arrow"></i>
-                                            </a>
-                                            <div class="collapse" id="@parentMenu.ItemAlias">
-                                                <ul class="nav flex-column sub-menu">
-                                                      @foreach (var children in childmenu)
-                                                        {
-                                                            <li class="nav-item"> <a class="nav-link" id="PageLoad" href="@children.ExternalURL"> @children.ItemName </a></li>
-                                                        }
-                                                    </ul>
-                                                </div>
-                                        </li>
+                                            <i class="menu-arrow"></i>
+                                        </a>
+                                        <div class="collapse" id="@parentMenu.ItemAlias">
+                                            <ul class="nav flex-column sub-menu">
+                                                @foreach (var children in childmenu)
+                                                {
+                                                    <li class="nav-item"> <a class="nav-link" id="PageLoad" href="@children.ExternalURL"> @children.ItemName </a></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+
                                 }
                                 else
                                 {
-                                        @:
+                                    @:
                                     <li class="nav-item">
                                         <a class="nav-link" id="PageLoad" href="@parentMenu.ItemUrl">
-                                            <i class="fa @parentMenu.ItemIcon"></i>
-                                            <span class="menu-title">&nbsp;&nbsp;&nbsp;&nbsp;@parentMenu.ItemName</span>
+                                           <img class="menu-icon" src="~/assets/images/menu_icons/@parentMenu.ItemIcon" alt="menu icon"> <span class="menu-title">@parentMenu.ItemName</span>
                                         </a>
                                     </li>
-
-                                        
                                 }
                             }
 
                         }
-
-
                     }
 
-                    @*<li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                            <i class="icon-bar-graph menu-icon"></i>
-                            <span class="menu-title">Charts</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="charts">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="../charts/chartjs.html">ChartJs</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="../charts/morris.html">Morris</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="../charts/flot-chart.html">Float</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="../charts/google-charts.html">Google charts</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="../charts/sparkline.html">Sparkline js</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="../charts/c3.html">C3 charts</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="../charts/chartist.html">Chartists</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="../charts/justGage.html">JustGage</a></li>
-                            </ul>
-                        </div>
-                    </li>*@
                    
                 </ul>
             </nav>
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-              
-
                     @RenderBody()
+
+
+
+                    <div class="col-md-12 col-sm-6 grid-margin stretch-card" id="myLoader" style="minWidth:100%;max-width:100%;">
+                          <div class="bar-loader">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+
+                        </div>
+
+                    </div>
                 </div>
+
                 <!-- content-wrapper ends -->
                 <!-- partial:partials/_footer.html -->
                 <footer class="footer">
                     <div class="container-fluid clearfix">
-                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright &copy; Dolphin @DateTime.Now.Year</span>
-                        @*<span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>*@
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright &copy; Dolphin @DateTime.Now.Year. All rights reserved.</span>
+                   
                     </div>
                 </footer>
                 <!-- partial -->
@@ -547,31 +439,27 @@
 
     <script src="~/assets/js/data-table.js"></script>
 
-    <!-- Custom js for this page-->
+
     <script src="~/assets/js/file-upload.js"></script>
     <script src="~/assets/js/iCheck.js"></script>
     <script src="~/assets/js/typeahead.js"></script>
     <script src="~/assets/js/select2.js"></script>
     <!-- End custom js for this page-->
-    <!-- End custom js for this page-->
-
 
 
 
     <script type="text/javascript">
-        $("#validate-form").submit(function () {
+                    $("#validate-form").submit(function () {
 
-            $("#myLoader").show();
-        })
+                        $("#myLoader").show();
+                    })
 
-        $("#PageLoad").click(function () {
-            alert("Good");
-            $("#myLoader").show();
-        })
+                    $("#PageLoad").click(function () {
+
+                        $("#myLoader").show();
+                    })
     </script>
-
 </body>
 
-<!-- Mirrored from www.urbanui.com/pearl-admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 22 Apr 2018 19:49:57 GMT -->
+<!-- Mirrored from www.urbanui.com/radiant/jquery/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 21 May 2018 14:44:02 GMT -->
 </html>
-

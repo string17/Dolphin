@@ -15,7 +15,7 @@ namespace DolphinWeb.Models
     public class BrandObj
     {
         public int BrandId { get; set; }
-        public string BrandTitle { get; set; }
+        public string BrandName { get; set; }
         public string BrandDesc { get; set; }
         public bool IsBrandActive { get; set; }
         public string UserName { get; set; }

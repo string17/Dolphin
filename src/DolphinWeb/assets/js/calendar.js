@@ -1,6 +1,7 @@
 (function($) {
   'use strict';
   $(function() {
+    var style = getComputedStyle(document.body);
     if ($('#calendar').length) {
       $('#calendar').fullCalendar({
         header: {
@@ -19,17 +20,20 @@
           {
             title: 'Long Event',
             start: '2017-07-07',
-            end: '2017-07-10'
+            end: '2017-07-10',
+            color: style.getPropertyValue('--info')
           },
           {
             id: 999,
             title: 'Repeating Event',
-            start: '2017-07-09T16:00:00'
+            start: '2017-07-09T16:00:00',
+            color: style.getPropertyValue('--danger')
           },
           {
             id: 999,
             title: 'Repeating Event',
-            start: '2017-07-16T16:00:00'
+            start: '2017-07-16T16:00:00',
+            color: style.getPropertyValue('--info')
           },
           {
             title: 'Conference',
@@ -39,7 +43,8 @@
           {
             title: 'Meeting',
             start: '2017-07-12T10:30:00',
-            end: '2017-07-12T12:30:00'
+            end: '2017-07-12T12:30:00',
+            color: style.getPropertyValue('--danger')
           },
           {
             title: 'Lunch',
@@ -64,7 +69,8 @@
           {
             title: 'Click for Google',
             url: 'http://google.com/',
-            start: '2017-07-28'
+            start: '2017-07-28',
+            color: style.getPropertyValue('--danger')
           }
         ]
       })

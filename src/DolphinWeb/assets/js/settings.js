@@ -2,13 +2,15 @@
   'use strict';
   $(function() {
     $(".nav-settings").click(function() {
+      $("#theme-settings").removeClass("open");
       $("#right-sidebar").toggleClass("open");
     });
     $(".settings-close").click(function() {
       $("#right-sidebar,#theme-settings").removeClass("open");
     });
 
-    $("#settings-trigger").on("click", function() {
+    $(".navbar-nav .nav-item.color-setting").on("click", function() {
+      $("#right-sidebar").removeClass("open");
       $("#theme-settings").toggleClass("open");
     });
 

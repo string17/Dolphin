@@ -57,7 +57,9 @@
                                 </div>
                             </div>
 
-
+                            <p class="card-description">
+                                <b>Lagos</b>
+                            </p>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group row">
@@ -81,6 +83,47 @@
                                         <label class="col-sm-3 col-form-label">Resolution Time (Hour)</label>
                                         <div class="col-sm-9">
                                             <select class="form-control" name="RestTime" required>
+                                                <option value="">Select</option>
+                                                @{
+                                                    for (int i = 1; i < 48; i++)
+                                                    {
+                                                        <option value=@i>@i</option>
+                                                    }
+                                                }
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="card-description">
+                                
+                                <b>UpCountry</b>
+                            </p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Response Time</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="RespTimeUp" required>
+                                                <option value="">Select</option>
+                                                @{
+                                                    for (int i = 1; i < 10; i++)
+                                                    {
+                                                        <option value=@i> @i</option>
+                                                    }
+                                                }
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Resolution Time (Hour)</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="RestTimeUp" required>
                                                 <option value="">Select</option>
                                                 @{
                                                     for (int i = 1; i < 48; i++)
@@ -144,7 +187,7 @@
                                         </div>
                                         <div class="col-sm-7 pull-right">
                                             <button type="submit" class="btn btn-success mr-2">Create Account</button>
-                                            <button class="btn btn-light">Cancel</button>
+                                            <button class="btn btn-light" type="reset">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
