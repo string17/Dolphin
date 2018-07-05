@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DolphinServices.Response
+{
+    public class BrandResponse
+    {
+        public string ResponseCode { get; set; }
+        public string ResponseMessage { get; set; }
+        public List<BrandDetails> BrandDetail { get; set; }
+      }
+
+
+
+    public class BrandDetails
+    {
+        public int BrandId { get; set; }
+        public string BrandName { get; set; }
+        public string BrandDesc { get; set; }
+        public bool IsBrandActive { get; set; }
+    }
+}

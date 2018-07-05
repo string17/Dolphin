@@ -1,0 +1,190 @@
+﻿@{
+    IEnumerable<DolphinWeb.Models.TerminalObj> Model_Terminals = ViewBag.Terminals;
+   
+
+    int sn = 0;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{if (!String.IsNullOrEmpty(ViewBag.SuccessMsg))
+    {
+        <div class="alert alert-success" role="alert" style="margin:auto;width:100%;">
+            @ViewBag.SuccessMsg
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        </div>
+    }
+}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">@ViewBag.Message</h4>
+        <div class="row">
+            <div class="col-12">
+                <table id="order-listing" class="table">
+                    <thead>
+                        <tr>
+                            <th>S/N #</th>
+                            <th>TerminalNo</th>
+                            <th>Reference</th>
+                            <th>Serial No</th>
+                            <th>Engineer</th>
+                            <th>State</th>
+                            <th>Region</th>
+                            <th>Client</th>
+                            <th>Support</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var n in Model_Terminals)
+                        {
+
+                            sn += 1;
+                            <tr>
+                                <td>@sn</td>
+                                <td>@n.TerminalNo</td>
+                                <td>@n.TerminalRef</td>
+                                <td>@n.SerialNo</td>
+                                <td>@n.Engineer</td>
+                                <td> @n.TerminalAlias</td>
+                                <td>@n.RegionTitle</td>
+                                <td>@n.ClientAlias</td>
+                                <td><label class="badge badge-success">@(Convert.ToBoolean(n.IsUnderSupport) ? "Active" : "Inactive")</label></td>
+                                <td><label class="badge badge-success">@(Convert.ToBoolean(n.IsTerminalActive) ? "Active" : "Inactive")</label></td>
+                          
+                                <td class="noExl">
+                                    @*<a data-toggle="modal" onclick="showAccountdetails(this.id);" id="@n.RoleId">Details</a>*@
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuOutlineButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                            Action
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            @*<a class="dropdown-item" href="#" data-toggle="modal" data-target="#userdetails">Details</a>*@
+                                            <a class="dropdown-item" data-toggle="modal" onclick="showdetails(this.id);" id="@n.TerminalId">Details</a>
+                                            @*<li><a data-toggle="modal" onclick="showAccountdetails(this.id);" id="@n.CustomerId">Details</a></li>*@
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="@Url.Action("Modifyterminal", new { TerminalId = @n.TerminalId })" id="PageLoad">Edit</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal starts -->
+@*<div class="text-center">
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal-2">Click for demo<i class="mdi mdi-play-circle ml-1"></i></button>
+    </div>*@
+<div class="modal fade" id="Terminaldetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-2" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel-2">@ViewBag.Message</h6>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>*@
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>TerminalNo</th>
+                                <th><label id="terminalno"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Terminal Reference</th>
+                                <th><label id="terminalref"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Serial Number</th>
+                                <th><label id="serialno"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Client</th>
+                                <th><label id="client"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Brand</th>
+                                <th><label id="brand"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Location</th>
+                                <th><label id="location"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Engineer</th>
+                                <th><label id="engineer"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Support</th>
+                                <th><label id="support"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <th><label id="status"></label></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            <div class="modal-footer">
+                   <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Ends -->
+
+
+<script type="text/javascript">
+    function showdetails(TerminalId) {
+        //alert("Good");
+       // $("#myLoader").show();
+        var url = "/Terminal/GetTerminalDetails?TerminalId=" + TerminalId;
+        $.get(url, { terminal: TerminalId }, function (data) {
+            var out;
+            $('#terminalno').html(data.TerminalNo);
+            $('#terminalref').html(data.TerminalRef);
+            $('#serialno').html(data.SerialNo);
+            $('#client').html(data.ClientName);
+            $('#brand').html(data.BrandName);
+            $('#location').html(data.Location);
+            $('#engineer').html(data.FirstName+" "+ data.MiddleName + " "+ data.LastName);
+            
+            
+            if (data.IsUnderSupport == 1) { Support = "Active"; }
+            else { Support = "Inactive"; }
+            $('#support').html(data.IsUnderSupport);
+
+            if (data.IsTerminalActive == 1) { status = "Active"; }
+            else { status = "Inactive"; }
+            $('#status').html(data.IsTerminalActive);
+        
+        })
+        //closeProgressIndicator();
+        $("#Terminaldetails").modal('show');
+
+        
+        }
+ 
+    
+
+
+
+    $("#details").click(function () {
+
+        alert("Good");
+    });
+
+
+</script>

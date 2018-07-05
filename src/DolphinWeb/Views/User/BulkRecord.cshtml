@@ -1,0 +1,98 @@
+﻿@{
+    IEnumerable<DolphinWeb.Models.ClientResp> Model_Clients = ViewBag.Clients;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+
+    <div class="col-md-12 d-flex align-items-stretch grid-margin">
+
+        <div class="row flex-grow">
+
+
+            @{if (!String.IsNullOrEmpty(@ViewBag.ErrorMsg))
+                {
+                    <div class="alert alert-danger" role="alert" style="margin:auto;width:100%;">
+                        @ViewBag.ErrorMsg
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    </div>
+                }
+
+            }
+
+            <div class="col-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">@ViewBag.Message</h4>
+                        <form class="forms-sample" method="post" action="~/user/bulkrecord" id="validate-form" enctype="multipart/form-data">
+
+                            <div class="row">
+                                @*<div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Institution</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="ClientId" required>
+                                                <option value="">Select</option>
+
+                                                @foreach (var n in Model_Clients)
+                                                {
+                                                    <option value="@n.ClientId">@n.ClientAlias </option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>*@
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">File</label>
+                                        <div class="col-sm-9">
+                                            <input type="file" name="UserRecord" class="file-upload-default" required>
+                                            <div class="input-group col-xs-12">
+                                                <input type="text" class="form-control file-upload-info" disabled placeholder="Upload File">
+                                                <span class="input-group-append">
+                                                    <button class="file-upload-browse btn btn-info" type="button"><i class="mdi mdi-upload"></i>Upload</button>
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        
+                            <div class="row" style="margin-top:15px;">
+
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+
+                                        </div>
+                                        <div class="col-sm-8 pull-right">
+                                            <button type="submit" class="btn btn-primary mr-2"><i class="mdi mdi-file-document"></i>Save Record</button>
+                                            <button class="btn btn-light" type="reset"><i class="mdi mdi-refresh"></i>Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
