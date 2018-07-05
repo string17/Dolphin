@@ -1,5 +1,4 @@
-﻿using DolphinWeb.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,10 +9,10 @@ namespace DolphinWeb.Controllers
 {
     public class AccountController : BaseController
     {
-        private readonly AppLogic _service;
+        //private readonly AppLogic _service;
         public AccountController()
         {
-            _service = new AppLogic();
+            //_service = new AppLogic();
         }
         // GET: Account
 

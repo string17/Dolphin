@@ -1,13 +1,52 @@
-﻿@{
-    //var service = new BLL.ApplicationLogic.UserManagement();
-    //var user = service.GetMenuByUsername(User.Identity.Name);
-    //BLL.ApplicationLogic.UserManagement AccountMgt = new BLL.ApplicationLogic.UserManagement();
-    //var item = AccountMgt.GetMenuByUsername(User.Identity.Name);
-    //var displayName = service.GetUserProfileByUsername(User.Identity.Name);
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+@{
+
 
     var ipaddress = new DolphinWeb.Services.AuditTrail().DetermineIPAddress();
     var ComputerDetails = new DolphinWeb.Services.AuditTrail().DetermineCompName(ipaddress);
-
     var _service = new DolphinWeb.Services.AppLogic();
     var _menu = _service.GetMenu(User.Identity.Name, ComputerDetails, ipaddress);
     //var _menu=_service.GetMenuByUsername(User.Identity.Name);
@@ -328,7 +367,7 @@
                                 <p class="designation">@_displayName.Title</p>
                                 @currentTime
                             </div>
-       
+
                         </div>
                     </li>
 
@@ -355,7 +394,7 @@
                                     var childmenu = _menu.Where(menu => menu.MenuId == parentMenu.ItemId);
                                     <li class="nav-item">
                                         <a class="nav-link" data-toggle="collapse" href="#@parentMenu.ItemAlias" aria-expanded="false" aria-controls="@parentMenu.ItemAlias">
-                                        <img class="menu-icon" src="~/assets/images/menu_icons/@parentMenu.ItemIcon" alt="menu icon">
+                                            <img class="menu-icon" src="~/assets/images/menu_icons/@parentMenu.ItemIcon" alt="menu icon">
                                             <span class="menu-title">&nbsp;&nbsp;&nbsp;&nbsp;@parentMenu.ItemName</span>
                                             <i class="menu-arrow"></i>
                                         </a>
@@ -375,7 +414,7 @@
                                     @:
                                     <li class="nav-item">
                                         <a class="nav-link" id="PageLoad" href="@parentMenu.ItemUrl">
-                                           <img class="menu-icon" src="~/assets/images/menu_icons/@parentMenu.ItemIcon" alt="menu icon"> <span class="menu-title">@parentMenu.ItemName</span>
+                                            <img class="menu-icon" src="~/assets/images/menu_icons/@parentMenu.ItemIcon" alt="menu icon"> <span class="menu-title">@parentMenu.ItemName</span>
                                         </a>
                                     </li>
                                 }
@@ -384,7 +423,7 @@
                         }
                     }
 
-                   
+
                 </ul>
             </nav>
             <!-- partial -->
@@ -395,7 +434,7 @@
 
 
                     <div class="col-md-12 col-sm-6 grid-margin stretch-card" id="myLoader" style="minWidth:100%;max-width:100%;">
-                          <div class="bar-loader">
+                        <div class="bar-loader">
                             <span></span>
                             <span></span>
                             <span></span>
@@ -411,7 +450,7 @@
                 <footer class="footer">
                     <div class="container-fluid clearfix">
                         <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright &copy; Dolphin @DateTime.Now.Year. All rights reserved.</span>
-                   
+
                     </div>
                 </footer>
                 <!-- partial -->

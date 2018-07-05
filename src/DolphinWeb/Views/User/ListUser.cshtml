@@ -26,8 +26,8 @@
                             <th>S/N #</th>
                             <th>Name</th>
                             <th>Username</th>
-                            <th>Email</th>
-                            <th>Phone No</th>
+                            @*<th>Email</th>*@
+                            @*<th>Phone No</th>*@
                             <th>Image</th>
                             <th>Role</th>
                             <th>Company</th>
@@ -45,8 +45,8 @@
                                 <td>@sn</td>
                                 <td>@n.FirstName @n.MiddleName @n.LastName</td>
                                 <td>@n.UserName</td>
-                                <td>@n.Email</td>
-                                <td>@n.PhoneNo</td>
+                                @*<td>@n.Email</td>*@
+                                @*<td>@n.PhoneNo</td>*@
                                 <td> <img src="~/assets/UserImg/@n.UserImg" style="height:30px;width:50px;"></td>
                                 <td>@n.RoleName</td>
                                 <td>@n.ClientAlias</td>
@@ -60,7 +60,7 @@
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             @*<a class="dropdown-item" href="#" data-toggle="modal" data-target="#userdetails">Details</a>*@
-                                            <a class="dropdown-item" href="#" id="details">Details</a>
+                                            <a class="dropdown-item" data-toggle="modal" onclick="showdetails(this.id);" id="@n.UserId">Details</a>
                                             @*<li><a data-toggle="modal" onclick="showAccountdetails(this.id);" id="@n.CustomerId">Details</a></li>*@
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="@Url.Action("ModifyUser", new { UserId = @n.UserId })" id="PageLoad">Edit</a>
@@ -85,21 +85,58 @@
 @*<div class="text-center">
         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal-2">Click for demo<i class="mdi mdi-play-circle ml-1"></i></button>
     </div>*@
-<div class="modal fade" id="userdetailsp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-2" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="userdetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel-2" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel-2">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h6 class="modal-title" id="exampleModalLabel-2">@ViewBag.Message</h6>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
             </div>
             <div class="modal-body">
-                <p>Modal body text goes here.</p>
+                <div class="col-md-12">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Full Name</th>
+                                <th><label id="fullname"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Company</th>
+                                <th><label id="company"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Phone Number</th>
+                                <th><label id="phoneno"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Role</th>
+                                <th><label id="role"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Sex</th>
+                                <th><label id="sex"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Username</th>
+                                <th><label id="username"></label></th>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <th><label id="email"></label></th>
+                            </tr>
+                            <tr>
+                                <th>User Status</th>
+                                <th><label id="status"></label></th>
+                            </tr>
+                       
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success">Submit</button>
-                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -108,6 +145,36 @@
 
 
 <script type="text/javascript">
+    function showdetails(UserId) {
+        //alert("Good");
+        //$("#myLoader").show();
+        var url = "/User/GetUserDetails?UserId=" + UserId;
+        $.get(url, { user: UserId }, function (data) {
+
+            var out;
+            $('#fullname').html(data.FirstName + " " + data.MiddleName + " " + data.LastName);
+            $('#company').html(data.ClientAlias);
+            $('#phoneno').html(data.PhoneNo);
+            $('#role').html(data.RoleDesc);
+            $('#sex').html(data.Sex);
+            $('#username').html(data.UserName);
+            $('#email').html(data.Email);
+            if (data.IsUserActive == 1) { status = "Active"; }
+            else { status = "Inactive"; }
+            $('#status').html(status);
+
+           
+        })
+        //closeProgressIndicator();
+        $("#userdetails").modal('show');
+
+
+        }
+
+
+
+
+
     $("#details").click(function () {
 
         alert("Good");

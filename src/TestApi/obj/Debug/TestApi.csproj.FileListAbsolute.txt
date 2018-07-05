@@ -1,6 +1,0 @@
-C:\Development\Dol\DolphinWeb\TestApi\bin\Debug\TestApi.dll
-C:\Development\Dol\DolphinWeb\TestApi\bin\Debug\TestApi.pdb
-C:\Development\Dol\DolphinWeb\TestApi\obj\Debug\TestApi.csprojResolveAssemblyReference.cache
-C:\Development\Dol\DolphinWeb\TestApi\obj\Debug\TestApi.csproj.CoreCompileInputs.cache
-C:\Development\Dol\DolphinWeb\TestApi\obj\Debug\TestApi.dll
-C:\Development\Dol\DolphinWeb\TestApi\obj\Debug\TestApi.pdb

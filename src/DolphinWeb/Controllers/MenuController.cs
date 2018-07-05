@@ -1,4 +1,5 @@
-﻿using DolphinWeb.Services;
+﻿using DolphinServices.ApplicationLogic;
+using DolphinServices.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,19 +8,21 @@ using System.Web.Mvc;
 
 namespace DolphinWeb.Controllers
 {
-    public class MenuController : Controller
+    public class MenuController : BaseController
     {
-        private readonly AppLogic _service;
-        private readonly SecurityLogic securityLogic;
-        private readonly FileLogic file;
-        private static string ipaddress = new AuditTrail().DetermineIPAddress();
-        private readonly string ComputerDetails = new AuditTrail().DetermineCompName(ipaddress);
+        private readonly Services _dolphinApi;
+        private readonly AuditService _auditService;
+        private readonly EncodingCharacters _encodingService;
+        private readonly UploadAttachment _uploadFile;
+        private static string ipaddress = new AuditService().DetermineIPAddress();
+        private readonly string ComputerDetails = new AuditService().DetermineCompName(ipaddress);
 
         public MenuController()
         {
-            _service = new AppLogic();
-            securityLogic = new SecurityLogic();
-            file = new FileLogic();
+            _dolphinApi = new Services();
+            _auditService = new AuditService();
+            _encodingService = new EncodingCharacters();
+            _uploadFile = new UploadAttachment();
         }
 
         // GET: Menu

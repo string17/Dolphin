@@ -1,5 +1,6 @@
-﻿using DolphinWeb.Models;
-using DolphinWeb.Services;
+﻿using DolphinServices.ApplicationLogic;
+using DolphinServices.Infrastructure;
+using DolphinServices.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +12,17 @@ namespace DolphinWeb.Controllers
 {
     public class DolphinController : BaseController
     {
-        private readonly AppLogic _service;
-        private readonly AuditTrail auditTrail;
-        private readonly SecurityLogic securityLogic;
-        private static string ipaddress = new AuditTrail().DetermineIPAddress();
-        private readonly string ComputerDetails = new AuditTrail().DetermineCompName(ipaddress);
+        private readonly Services _dolphinApi;
+        private readonly AuditService _auditService;
+        private readonly EncodingCharacters _encodingService;
+        private static string ipaddress = new AuditService().DetermineIPAddress();
+        private readonly string ComputerDetails = new AuditService().DetermineCompName(ipaddress);
 
         public DolphinController()
         {
-            _service = new AppLogic();
-            auditTrail = new AuditTrail();
-            securityLogic = new SecurityLogic();
+            _dolphinApi = new Services();
+            _auditService = new AuditService();
+            _encodingService = new EncodingCharacters();
         }
 
 
@@ -35,35 +36,39 @@ namespace DolphinWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(UserObj param)
+        public ActionResult Index(LoginRequest param)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-
             try
             {
-                var success = _service.ValidateUser(param.Username, param.Password, ComputerDetails, ipaddress);
+                var request = new LoginRequest();
+                request.UserName = param.UserName;
+                request.Password = param.Password;
+                request.SystemIp = ipaddress;
+                request.Computername = ComputerDetails;
+                var success = _dolphinApi.ValidateUser(request);
                 if (success != null)
                 {
-                    if (success.RespCode.Equals("00"))
+                    if (success.ResponseCode.Equals("00"))
                     {
-                        FormsAuthentication.SetAuthCookie(param.Username, false);
+                        FormsAuthentication.SetAuthCookie(param.UserName, false);
                         return RedirectToAction("Dashboard", "Dolphin");
                     }
 
-                    else if (success.RespCode.Equals("01"))
+                    else if (success.ResponseCode.Equals("01"))
                     {
-                        string Id = securityLogic.EncryptPassword(param.Username);
-                        TempData["ChangePassword"] = success.RespMessage;
+                        string Id = _encodingService.EncryptCharacter(param.UserName);
+                        TempData["ChangePassword"] = success.ResponseMessage;
                         string NewURL = "http://localhost:51310/dolphin/resetpassword?Id=" + Id;
                         Response.Redirect(NewURL, true);
                     }
                     else
                     {
-                        ViewBag.ErrorMsg = success.RespMessage;
+                        ViewBag.ErrorMsg = success.ResponseMessage;
                     }
                 }
                 else
@@ -92,16 +97,56 @@ namespace DolphinWeb.Controllers
 
         public ActionResult LockAccount()
         {
+            var request = new LoginRequest();
+            request.UserName = User.Identity.Name;
+            request.SystemIp = ipaddress;
+            request.Computername = ComputerDetails;
+            ViewBag.UserDetails = _dolphinApi.GetUserInfo(request);
             return View();
         }
 
 
         [HttpPost]
-        public ActionResult LockAccount(UserObj user)
+        public ActionResult LockAccount(LoginRequest param)
         {
             if (!ModelState.IsValid)
             {
                 return View();
+            }
+            //var request = new LoginRequest();
+            //request.UserName = User.Identity.Name;
+            //request.SystemIp = ipaddress;
+            //request.Computername = ComputerDetails;
+            //ViewBag.UserDetails = _dolphinApi.GetUserInfo(request);
+
+            try
+            {
+                var login = new LoginRequest();
+                login.UserName = param.UserName;
+                login.Password = param.Password;
+                login.SystemIp = ipaddress;
+                login.Computername = ComputerDetails;
+                var success = _dolphinApi.ValidateUser(login);
+                if (success != null)
+                {
+                    if (success.ResponseCode.Equals("00"))
+                    {
+                        FormsAuthentication.SetAuthCookie(param.UserName, false);
+                        return RedirectToAction("Dashboard", "Dolphin");
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMsg = success.ResponseMessage;
+                    }
+                }
+                else
+                {
+                    ViewBag.ErrorMsg = "This service is not available";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMsg = ex.Message;
             }
             return View();
         }
@@ -110,10 +155,14 @@ namespace DolphinWeb.Controllers
         public ActionResult Logout()
         {
             TempData["ProfileMsg"] = TempData["ProfileMsg"];
-            var success=_service.TerminateSession(User.Identity.Name, ComputerDetails, ipaddress);
+            var request = new LoginRequest();
+            request.UserName = User.Identity.Name;
+            request.SystemIp = ipaddress;
+            request.Computername = ComputerDetails;
+            var success=_dolphinApi.TerminateSession(request);
             if (success != null)
             {
-                if (success.RespCode.Equals("00"))
+                if (success.ResponseCode.Equals("00"))
                 {
                     FormsAuthentication.SignOut();
                     return RedirectToAction("Index", "Dolphin");
@@ -126,8 +175,7 @@ namespace DolphinWeb.Controllers
             else
             {
                 return View();
-            }
-            
+            }           
         }
 
 
@@ -138,22 +186,26 @@ namespace DolphinWeb.Controllers
 
 
         [HttpPost]
-        public ActionResult ForgotPassword(UserObj param)
+        public ActionResult ForgotPassword(LoginRequest param)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            var success = _service.ForgotPassword(param.Email, ComputerDetails, ipaddress);
+            var request = new LoginRequest();
+            request.Email = param.Email;
+            request.SystemIp = ipaddress;
+            request.Computername = ComputerDetails;
+            var success = _dolphinApi.ForgotPassword(request);
             if (success!=null)
             {
-                if (success.RespCode.Equals("00"))
+                if (success.ResponseCode.Equals("00"))
                 {
-                    ViewBag.SuccessMsg = success.RespMessage;
+                    ViewBag.SuccessMsg = success.ResponseMessage;
                 }
                 else
                 {
-                    ViewBag.ErrorMsg = success.RespMessage;
+                    ViewBag.ErrorMsg = success.ResponseMessage;
                 }
             }
             else
@@ -170,14 +222,14 @@ namespace DolphinWeb.Controllers
         public ActionResult ResetPassword(string Id)
         {
             ViewBag.SuccessMsg = TempData["ChangePassword"];
-            string Username = securityLogic.DecryptPassword(Id);
-            var userDetails = _service.GetUserInfo(Username, ComputerDetails, ipaddress);
-            ViewBag.User = userDetails;
+            //string Username = _encodingService.DecryptCharacter(Id);
+            //var userDetails = _dolphinApi.GetUserInfo();
+            //ViewBag.User = userDetails;
             return View();
         }
 
         [Route("ResetPassword/{Id}")]
-        public ActionResult ResetPassword(UserObj param, string Id)
+        public ActionResult ResetPassword(LoginRequest param, string Id)
         {
             if (!ModelState.IsValid)
             {
@@ -187,17 +239,22 @@ namespace DolphinWeb.Controllers
             {
                 if(param.Password == param.ConfirmPassword)
                 {
-                    var success = _service.ResetPassword(Id,param.Password,ComputerDetails,ipaddress);
+                    var request = new LoginRequest();
+                    request.UserName = _encodingService.DecryptCharacter(Id);
+                    request.Password = param.Password;
+                    request.SystemIp = ipaddress;
+                    request.Computername = ComputerDetails;
+                    var success = _dolphinApi.ResetPassword(param);
                     if (success!=null)
                     {
-                        if (success.RespCode.Equals("00"))
+                        if (success.ResponseCode.Equals("00"))
                         {
-                            TempData["Success"] = success.RespMessage;
+                            TempData["Success"] = success.ResponseMessage;
                             return RedirectToAction("login");
                         }
                         else
                         {
-                            ViewBag.ErrorMsg = success.RespMessage;
+                            ViewBag.ErrorMsg = success.ResponseMessage;
                         }
                     }
                     else

@@ -1,5 +1,6 @@
-﻿using DolphinWeb.Models;
-using DolphinWeb.Services;
+﻿using DolphinServices.ApplicationLogic;
+using DolphinServices.Infrastructure;
+using DolphinServices.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,21 +9,21 @@ using System.Web.Mvc;
 
 namespace DolphinWeb.Controllers
 {
-    public class ClientController : Controller
+    public class ClientController : BaseController
     {
-        private readonly AppLogic _service;
-        private readonly AuditTrail auditTrail;
-        private readonly SecurityLogic securityLogic;
-        private readonly FileLogic file;
-        private static string ipaddress = new AuditTrail().DetermineIPAddress();
-        private readonly string ComputerDetails = new AuditTrail().DetermineCompName(ipaddress);
+        private readonly Services _dolphinApi;
+        private readonly AuditService _auditService;
+        private readonly EncodingCharacters _encodingService;
+        private readonly UploadAttachment _uploadFile;
+        private static string ipaddress = new AuditService().DetermineIPAddress();
+        private readonly string ComputerDetails = new AuditService().DetermineCompName(ipaddress);
 
         public ClientController()
         {
-            _service = new AppLogic();
-            auditTrail = new AuditTrail();
-            securityLogic = new SecurityLogic();
-            file = new FileLogic();
+            _dolphinApi = new Services();
+            _auditService = new AuditService();
+            _encodingService = new EncodingCharacters();
+            _uploadFile = new UploadAttachment();
         }
         // GET: Client
         public ActionResult Index()
@@ -38,8 +39,10 @@ namespace DolphinWeb.Controllers
             return View();
         }
 
+
+
         [HttpPost]
-        public ActionResult NewClient(ClientData param)
+        public ActionResult NewClient(ClientRequest param)
         {
             if (!ModelState.IsValid)
             {
@@ -47,28 +50,28 @@ namespace DolphinWeb.Controllers
             }
             try
             {
-                var client = new ClientObj();
+                var client = new ClientRequest();
                 client.ClientAlias = param.ClientAlias;
-                client.ClientBanner = file.UploadBanner(param.ClientBanner);
+                client.ClientBanner = _uploadFile.UploadBanner(param.BannerFile);
                 client.ClientName = param.ClientName;
                 client.CreatedBy = User.Identity.Name;
                 client.CreatedOn = DateTime.Now;
                 client.IsClientActive = param.IsClientActive;
-                client.RespTime = param.RespTime;
-                client.RestTime = param.RestTime;
-                client.RespTimeUp = param.RespTimeUp;
-                client.RestTimeUp = param.RestTimeUp;
+                client.RespTimeIn = param.RespTimeIn;
+                client.RestTimeIn = param.RestTimeIn;
+                client.RespTimeOut = param.RespTimeOut;
+                client.RestTimeOut = param.RestTimeOut;
                 client.SystemIp = ipaddress;
                 client.Computername = ComputerDetails;
-                var success = _service.InsertClient(client);
-                if (success.RespCode.Equals("00"))
+                var success = _dolphinApi.InsertClient(client);
+                if (success.ResponseCode.Equals("00"))
                 {
-                    TempData["SuccessMsg"] = "Record successfully added";
+                    TempData["SuccessMsg"] = success.ResponseMessage;
                     return RedirectToAction("listclient");
                 }
                 else
                 {
-                    ViewBag.ErrorMsg = success.RespMessage;
+                    ViewBag.ErrorMsg = success.ResponseMessage;
                 }
             }
             catch(Exception ex)
@@ -78,13 +81,16 @@ namespace DolphinWeb.Controllers
             return View();
         }
 
+
+
         public ActionResult ListClient()
         {
             ViewBag.Message = "Clients";
             ViewBag.SuccessMsg = TempData["SuccessMsg"];
-            ViewBag.Clients = _service.GetAllClient();
+            ViewBag.Clients = _dolphinApi.GetAllClient();
             return View();
         }
+
 
 
         [HttpGet]
@@ -92,20 +98,22 @@ namespace DolphinWeb.Controllers
         public ActionResult ModifyClient(int ClientId)
         {
             ViewBag.Message = "Client";
-            ViewBag.Client = _service.GetClientDetails(ClientId);
+            ViewBag.Client = _dolphinApi.GetClientDetails(ClientId);
             return View();
         }
 
+
+
         [Route("Modifyclient/{ClientId}")]
-        public ActionResult ModifyClient(ClientData param, int ClientId)
+        public ActionResult ModifyClient(ClientRequest param, int ClientId)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
             ViewBag.Message = "Client";
-            var banner = new FileLogic().UploadBanner(param.ClientBanner, param.ClientBanner1);
-            var client = new ClientObj();
+            var banner = _uploadFile.UploadBanner(param.BannerFile, param.ClientBanner);
+            var client = new ClientRequest();
             client.ClientId = ClientId;
             client.ClientAlias = param.ClientAlias;
             client.ClientBanner = banner;
@@ -113,18 +121,25 @@ namespace DolphinWeb.Controllers
             client.CreatedBy = User.Identity.Name;
             client.CreatedOn = DateTime.Now;
             client.IsClientActive = param.IsClientActive;
-            client.RespTime = param.RespTime;
-            client.RestTime = param.RestTime;
-            client.RespTimeUp = param.RespTimeUp;
-            client.RestTimeUp = param.RestTimeUp;
-            client.UserName = User.Identity.Name;
+            client.RespTimeIn = param.RespTimeIn;
+            client.RestTimeIn = param.RestTimeIn;
+            client.RespTimeOut = param.RespTimeOut;
+            client.RestTimeOut = param.RestTimeOut;
+            client.CreatedBy = User.Identity.Name;
             client.SystemIp = ipaddress;
             client.Computername = ComputerDetails;
-            var success = _service.ModifyClient(client);
+            var success = _dolphinApi.ModifyClient(client);
             if (success!=null)
             {
-                TempData["SuccessMsg"] = "Record successfully updated";
-                return RedirectToAction("listclient");
+                if (success.ResponseCode.Equals("00"))
+                {
+                    TempData["SuccessMsg"] = success.ResponseMessage;
+                    return RedirectToAction("listclient");
+                }
+                else
+                {
+                    ViewBag.ErrorMsg = success.ResponseMessage;
+                }
             }
             else
             {

@@ -1,5 +1,6 @@
-﻿using DolphinWeb.Models;
-using DolphinWeb.Services;
+﻿using DolphinServices.ApplicationLogic;
+using DolphinServices.Infrastructure;
+using DolphinServices.Request;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System;
@@ -12,18 +13,21 @@ namespace DolphinWeb.Controllers
 {
     public class UserController : Controller
     {
-        private readonly AppLogic _service;
-        private readonly SecurityLogic securityLogic;
-        private readonly FileLogic file;
-        private static string ipaddress = new AuditTrail().DetermineIPAddress();
-        private readonly string ComputerDetails = new AuditTrail().DetermineCompName(ipaddress);
+        private readonly Services _dolphinApi;
+        private readonly AuditService _auditService;
+        private readonly EncodingCharacters _encodingService;
+        private readonly UploadAttachment _uploadFile;
+        private static string ipaddress = new AuditService().DetermineIPAddress();
+        private readonly string ComputerDetails = new AuditService().DetermineCompName(ipaddress);
 
         public UserController()
         {
-            _service = new AppLogic();
-            securityLogic = new SecurityLogic();
-            file = new FileLogic();
+            _dolphinApi = new Services();
+            _auditService = new AuditService();
+            _encodingService = new EncodingCharacters();
+            _uploadFile = new UploadAttachment();
         }
+
 
         // GET: User
         public ActionResult Index()
@@ -34,52 +38,52 @@ namespace DolphinWeb.Controllers
         public ActionResult NewUser()
         {
             ViewBag.Message = "User Info";
-            ViewBag.Clients = _service.GetAllClient();
-            ViewBag.Roles = _service.GetAllRole();
+            ViewBag.Clients = _dolphinApi.GetAllClient();
+            ViewBag.Roles = _dolphinApi.GetAllRole();
             return View();
         }
 
         [HttpPost]
-        public ActionResult NewUser(UserDetails param)
+        public ActionResult NewUser(UserDetailsRequest param)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            ViewBag.Clients = _service.GetAllClient();
-            ViewBag.Roles = _service.GetAllRole();
+            ViewBag.Clients = _dolphinApi.GetAllClient();
+            ViewBag.Roles = _dolphinApi.GetAllRole();
             if (param.Password.Any("!@#$%^&*".Contains) && param.Password.Length >= 6)
 
             {
                 try
                 {
-                    string UserImage = file.UploadImage(param.UserImg);
-                    var user = new UserInfo();
-                    user.FirstName = param.FirstName;
-                    user.MiddleName = param.MiddleName;
-                    user.LastName = param.LastName;
-                    user.Email = param.Email;
-                    user.UserName = param.UserName;
-                    user.Password = securityLogic.EncryptPassword(param.Password);
-                    user.PhoneNo = param.PhoneNo;
-                    user.ClientId = param.ClientId;
-                    user.RoleId = param.RoleId;
-                    user.Sex = param.Sex;
-                    user.UserImg = UserImage;
-                    user.IsUserActive = param.IsUserActive;
-                    user.CreatedBy = User.Identity.Name;
-                    user.CreatedOn = DateTime.Now;
-                    user.Computername = ComputerDetails;
-                    user.SystemIp = ipaddress;
-                    var success = _service.InsertUserRecord(user);
-                    if (success.RespCode.Equals("00"))
+                    string UserImage = _uploadFile.UploadImage(param.ImgFile);
+                    var request = new UserDetailsRequest();
+                    request.FirstName = param.FirstName.ToUpper();
+                    request.MiddleName = param.MiddleName.ToUpper();
+                    request.LastName = param.LastName.ToUpper();
+                    request.Email = param.Email.ToUpper();
+                    request.UserName = param.UserName.ToUpper();
+                    request.Password = _encodingService.EncryptCharacter(param.Password);
+                    request.PhoneNo = param.PhoneNo;
+                    request.ClientId = param.ClientId;
+                    request.RoleId = param.RoleId;
+                    request.Sex = param.Sex.ToUpper();
+                    request.UserImg = UserImage;
+                    request.IsUserActive = param.IsUserActive;
+                    request.CreatedBy = User.Identity.Name.ToUpper();
+                    request.CreatedOn = DateTime.Now;
+                    request.Computername = ComputerDetails;
+                    request.SystemIp = ipaddress;
+                    var success = _dolphinApi.InsertUserRecord(request);
+                    if (success.ResponseCode.Equals("00"))
                     {
-                        TempData["SuccessMsg"] = success.RespMessage;
+                        TempData["SuccessMsg"] = success.ResponseMessage;
                         return RedirectToAction("listuser");
                     }
                     else
                     {
-                        ViewBag.ErrorMsg = success.RespMessage;
+                        ViewBag.ErrorMsg = success.ResponseMessage;
                     }
                 }
                 catch(Exception ex)
@@ -102,16 +106,16 @@ namespace DolphinWeb.Controllers
         {
             ViewBag.Message = "User Account";
             ViewBag.SuccessMsg=TempData["SuccessMsg"];
-            ViewBag.UserDetails = _service.GetUserDetails(UserId);
-            ViewBag.Clients = _service.GetAllClient();
-            ViewBag.Roles = _service.GetAllRole();
+            ViewBag.UserDetails = _dolphinApi.GetUserDetails(UserId);
+            ViewBag.Clients = _dolphinApi.GetAllClient();
+            ViewBag.Roles = _dolphinApi.GetAllRole();
             return View();
         }
 
 
 
         [Route("ModifyUser/{UserId}")]
-        public ActionResult ModifyUser(UserDetails param, int UserId)
+        public ActionResult ModifyUser(UserDetailsRequest param, int UserId)
         {
             if (!ModelState.IsValid)
             {
@@ -120,44 +124,44 @@ namespace DolphinWeb.Controllers
 
             ViewBag.Message = "User Account";
             ViewBag.SuccessMsg = TempData["SuccessMsg"];
-            //ViewBag.UserDetails = _service.GetUserDetails(UserId);
-            ViewBag.Clients = _service.GetAllClient();
-            ViewBag.Roles = _service.GetAllRole();
+            ViewBag.UserDetails = _dolphinApi.GetUserDetails(UserId);
+            ViewBag.Clients = _dolphinApi.GetAllClient();
+            ViewBag.Roles = _dolphinApi.GetAllRole();
 
             if (param.Password.Any("!@#$%^&*".Contains) && param.Password.Length >= 6)
             {
                 try
                 {
-                    string UserImage = file.UploadImage(param.UserImg, param.UserImg1);
-                    var user = new UserInfo();
-                    user.UserId = UserId;
-                    user.FirstName = param.FirstName;
-                    user.MiddleName = param.MiddleName;
-                    user.LastName = param.LastName;
-                    user.Email = param.Email;
-                    user.UserName = param.UserName;
-                    user.Password = securityLogic.EncryptPassword(param.Password);
-                    user.PhoneNo = param.PhoneNo;
-                    user.ClientId = param.ClientId;
-                    user.Sex = param.Sex;
-                    user.RoleId = param.RoleId;
-                    user.UserImg = UserImage;
-                    user.IsUserActive = param.IsUserActive;
-                    user.CreatedBy = User.Identity.Name;
-                    user.CreatedOn = DateTime.Now;
-                    user.Computername = ComputerDetails;
-                    user.SystemIp = ipaddress;
-                    var success = _service.ModifyUserRecord(user);
+                    string UserImage = _uploadFile.UploadImage(param.ImgFile, param.UserImg1);
+                    var request = new UserDetailsRequest();
+                    request.UserId = UserId;
+                    request.FirstName = param.FirstName.ToUpper();
+                    request.MiddleName = param.MiddleName.ToUpper();
+                    request.LastName = param.LastName.ToUpper();
+                    request.Email = param.Email.ToUpper();
+                    request.UserName = param.UserName.ToUpper();
+                    request.Password = _encodingService.EncryptCharacter(param.Password);
+                    request.PhoneNo = param.PhoneNo;
+                    request.ClientId = param.ClientId;
+                    request.Sex = param.Sex.ToUpper();
+                    request.RoleId = param.RoleId;
+                    request.UserImg = UserImage;
+                    request.IsUserActive = param.IsUserActive;
+                    request.CreatedBy = User.Identity.Name.ToUpper();
+                    request.CreatedOn = DateTime.Now;
+                    request.Computername = ComputerDetails;
+                    request.SystemIp = ipaddress;
+                    var success = _dolphinApi.ModifyUserRecord(request);
                     if (success!=null)
                     {
-                        if (success.RespCode.Equals("00"))
+                        if (success.ResponseCode.Equals("00"))
                         {
                             TempData["SuccessMsg"] = "Account successfully updated";
                             return RedirectToAction("listuser");
                         }
                         else
                         {
-                            ViewBag.ErrorMsg = success.RespMessage;
+                            ViewBag.ErrorMsg = success.ResponseMessage;
                         }
                     }
                     else
@@ -183,7 +187,7 @@ namespace DolphinWeb.Controllers
         {
             ViewBag.Message = "User Accounts";
             ViewBag.SuccessMsg = TempData["SuccessMsg"];
-            ViewBag.Users = _service.GetAllUser();
+            ViewBag.Users = _dolphinApi.GetAllUser();
             return View();
         }
 
@@ -192,20 +196,20 @@ namespace DolphinWeb.Controllers
         {
             ViewBag.Message = "User Accounts";
             ViewBag.SuccessMsg = TempData["SuccessMsg"];
-            ViewBag.Clients = _service.GetAllClient();
-            ViewBag.Roles = _service.GetAllRole();
+            ViewBag.Clients = _dolphinApi.GetAllClient();
+            ViewBag.Roles = _dolphinApi.GetAllRole();
             return View();
         }
 
         [HttpPost]
-        public ActionResult BulkRecord(UserDetails param)
+        public ActionResult BulkRecord(HttpFileCollectionBase UserRecord)
         {
             ViewBag.Message = "Upload User";
-            ViewBag.Clients = _service.GetAllClient();
+            ViewBag.Clients = _dolphinApi.GetAllClient();
 
             if (ModelState.IsValid)
             {
-                var files = param.UserFile; //System.Web.HttpContext.Current.Request.Files["TerminalDoc"];
+                var files =System.Web.HttpContext.Current.Request.Files["UserRecord"];
                 var supportedTypes = new[] { "xlsx" };
                 var fileExt = System.IO.Path.GetExtension(files.FileName).Substring(1);
                 if (!supportedTypes.Contains(fileExt))
@@ -218,7 +222,7 @@ namespace DolphinWeb.Controllers
                 {
                     string result1 = DateTime.Now.Millisecond + files.FileName;
                     int rowCount = 0;
-                    List<UserDetails> newDet = new List<UserDetails>();
+                    List<UserDetailsBulkRequest> newDet = new List<UserDetailsBulkRequest>();
                     XSSFWorkbook workBook = new XSSFWorkbook(files.InputStream);
                     var worksheet = workBook.GetSheetAt(0);
                     rowCount = worksheet.PhysicalNumberOfRows;
@@ -244,25 +248,25 @@ namespace DolphinWeb.Controllers
 
                         try
                         {
-                            var userDetails = new UserDetails();
-                            userDetails.LastName = one.ToString();
-                            userDetails.FirstName = two.ToString();
-                            userDetails.MiddleName = (row.GetCell(2, MissingCellPolicy.RETURN_NULL_AND_BLANK) == null ? string.Empty : row.GetCell(2, MissingCellPolicy.RETURN_NULL_AND_BLANK).StringCellValue);
-                            userDetails.UserName = one.ToString()+ i;
-                            userDetails.Email = four.ToString();
-                            userDetails.Password =  securityLogic.EncryptPassword(five.ToString());
-                            userDetails.PhoneNo = six.ToString();
-                            userDetails.Sex = seven.ToString();
-                            userDetails.RoleName = eight.ToString();
-                            userDetails.ClientName = ten.ToString();
-                            userDetails.UserStatus = eleven.ToString();
-                            userDetails.CreatedOn = DateTime.Now;
-                            userDetails.CreatedBy = User.Identity.Name;
-                            userDetails.ModifiedBy = "";
-                            userDetails.ModifiedOn = DateTime.Now;
-                            userDetails.SystemIp = ipaddress;
-                            userDetails.Computername = ComputerDetails;
-                            newDet.Add(userDetails);
+                            var request = new UserDetailsBulkRequest();
+                            request.LastName = one.ToString();
+                            request.FirstName = two.ToString();
+                            request.MiddleName = (row.GetCell(2, MissingCellPolicy.RETURN_NULL_AND_BLANK) == null ? string.Empty : row.GetCell(2, MissingCellPolicy.RETURN_NULL_AND_BLANK).StringCellValue);
+                            request.UserName = one.ToString()+ i;
+                            request.Email = four.ToString();
+                            request.Password =  _encodingService.EncryptCharacter(five.ToString());
+                            request.PhoneNo = six.ToString();
+                            request.Sex = seven.ToString();
+                            request.RoleName = eight.ToString();
+                            request.ClientName = ten.ToString();
+                            request.UserStatus = eleven.ToString();
+                            request.CreatedOn = DateTime.Now;
+                            request.CreatedBy = User.Identity.Name;
+                            request.ModifiedBy = "";
+                            request.ModifiedOn = DateTime.Now;
+                            request.SystemIp = ipaddress;
+                            request.Computername = ComputerDetails;
+                            newDet.Add(request);
 
                         }
                         catch (Exception ex)
@@ -273,17 +277,17 @@ namespace DolphinWeb.Controllers
 
                     }
                     //context.InsertBulk(newDet);
-                    var success=_service.UploadUserRecord(newDet);
+                    var success=_dolphinApi.UploadUserRecord(newDet);
                     if (success !=null)
                     {
-                        if (success.RespCode.Equals("00"))
+                        if (success.ResponseCode.Equals("00"))
                         {
-                            TempData["SuccessMsg"] = success.RespMessage;
+                            TempData["SuccessMsg"] = success.ResponseMessage;
                             return RedirectToAction("listuser");
                         }
                         else
                         {
-                            ViewBag.ErrorMsg = success.RespMessage;
+                            ViewBag.ErrorMsg = success.ResponseMessage;
                         }
                     }
                     else
@@ -296,6 +300,12 @@ namespace DolphinWeb.Controllers
                 ModelState.Clear();
             }
             return View();
+        }
+
+        public ActionResult GetUserDetails(int UserId)
+        {
+            var user = _dolphinApi.GetUserDetails(UserId);
+            return Json(user, JsonRequestBehavior.AllowGet);
         }
     }
 }

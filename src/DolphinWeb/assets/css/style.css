@@ -8500,11 +8500,12 @@ pre {
   max-width: 100%;
   margin-bottom: 1rem;
   background-color: transparent; }
-  .table th, .jsgrid .jsgrid-table th,
-  .table td, .jsgrid .jsgrid-table td {
-    padding: 0.6375rem;
-    vertical-align: top;
-    border-top: 1px solid #f3f3f3; }
+    .table th, .jsgrid .jsgrid-table th,
+    .table td, .jsgrid .jsgrid-table td {
+        padding:0.4375rem;
+        vertical-align: top;
+        border-top: 1px solid #f3f3f3;
+    }
   .table thead th, .jsgrid .jsgrid-table thead th {
     vertical-align: bottom;
     border-bottom: 2px solid #f3f3f3; }
@@ -20239,7 +20240,7 @@ ul {
     vertical-align: middle;
     font-size: 0.8rem;
     line-height: 1;
-    padding: 16px 10px; }
+    /*padding: 16px 10px;*/ }
     .table td img, .jsgrid .jsgrid-table td img,
     .table th img, .jsgrid .jsgrid-table th img {
       width: 30px;

@@ -1,5 +1,5 @@
 ﻿@{
-    DolphinWeb.Models.ClientResp Model_Client = ViewBag.Client;
+    DolphinServices.Response.ClientResponse Model_Client = ViewBag.Client;
 
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -60,8 +60,8 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Response Time</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="RespTime" required>
-                                                <option value=@(Model_Client.RespTimeUp)>@(Model_Client.RespTimeUp)</option>
+                                            <select class="form-control" name="RespTimeIn" required>
+                                                <option value=@(Model_Client.RespTimeIn)>@(Model_Client.RespTimeIn)</option>
                                                 @{
                                                     for (int i = 1; i < 10; i++)
                                                     {
@@ -77,8 +77,8 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Resolution Time (Hour)</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="RestTime" required>
-                                                <option value=@(Model_Client.RestTimeUp)>@(Model_Client.RestTimeUp)</option>
+                                            <select class="form-control" name="RestTimeIn" required>
+                                                <option value=@(Model_Client.RestTimeIn)>@(Model_Client.RestTimeIn)</option>
                                                 @{
                                                     for (int i = 1; i < 48; i++)
                                                     {
@@ -100,8 +100,8 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Response Time</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="RespTime" required>
-                                                <option value=@(Model_Client.RespTime)>@(Model_Client.RespTime)</option>
+                                            <select class="form-control" name="RespTimeOut" required>
+                                                <option value=@(Model_Client.RespTimeOut)>@(Model_Client.RespTimeOut)</option>
                                                 @{
                                                     for (int i = 1; i < 10; i++)
                                                     {
@@ -117,8 +117,8 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Resolution Time (Hour)</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control" name="RestTime" required>
-                                                <option value=@(Model_Client.RestTime)>@(Model_Client.RestTime)</option>
+                                            <select class="form-control" name="RestTimeOut" required>
+                                                <option value=@(Model_Client.RestTimeOut)>@(Model_Client.RestTimeOut)</option>
                                                 @{
                                                     for (int i = 1; i < 48; i++)
                                                     {
@@ -138,7 +138,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Banner</label>
                                         <div class="col-sm-9">
-                                            <input type="file" name="ClientBanner" class="file-upload-default">
+                                            <input type="file" name="BannerFile" class="file-upload-default">
                                             <div class="input-group col-xs-12">
                                                 <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                                                 <span class="input-group-append">
@@ -148,7 +148,7 @@
                                             
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" name="ClientBanner1" value="@((Model_Client != null) ? Model_Client.ClientBanner : string.Empty)" style="display: none;">
+                                    <input type="text" class="form-control" name="ClientBanner" value="@((Model_Client != null) ? Model_Client.ClientBanner : string.Empty)" style="display: none;">
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">
