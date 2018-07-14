@@ -8,3 +8,12 @@ C:\Users\USER\Documents\Visual Studio 2017\Projects\DolphinWeb\DolphinServices\o
 C:\Users\USER\Documents\Visual Studio 2017\Projects\DolphinWeb\DolphinServices\obj\Debug\DolphinServices.exe
 C:\Users\USER\Documents\Visual Studio 2017\Projects\DolphinWeb\DolphinServices\obj\Debug\DolphinServices.pdb
 C:\Users\USER\Documents\Visual Studio 2017\Projects\DolphinWeb\DolphinServices\obj\Debug\DolphinServices.csprojResolveAssemblyReference.cache
+C:\Development\Project\Dolphin\src\DolphinServices\bin\Debug\DolphinServices.exe.config
+C:\Development\Project\Dolphin\src\DolphinServices\bin\Debug\DolphinServices.exe
+C:\Development\Project\Dolphin\src\DolphinServices\bin\Debug\DolphinServices.pdb
+C:\Development\Project\Dolphin\src\DolphinServices\bin\Debug\Newtonsoft.Json.dll
+C:\Development\Project\Dolphin\src\DolphinServices\bin\Debug\RestSharp.dll
+C:\Development\Project\Dolphin\src\DolphinServices\bin\Debug\Newtonsoft.Json.xml
+C:\Development\Project\Dolphin\src\DolphinServices\obj\Debug\DolphinServices.csproj.CoreCompileInputs.cache
+C:\Development\Project\Dolphin\src\DolphinServices\obj\Debug\DolphinServices.exe
+C:\Development\Project\Dolphin\src\DolphinServices\obj\Debug\DolphinServices.pdb

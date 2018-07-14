@@ -57,23 +57,30 @@
     <Compile Include="ApplicationLogic\UploadAttachment.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\AuditRequest.cs" />
     <Compile Include="Request\ClientRequest.cs" />
+    <Compile Include="Request\ddd.cs" />
+    <Compile Include="Request\EmailRequest.cs" />
     <Compile Include="Request\LoginRequest.cs" />
+    <Compile Include="Request\MenuRequest.cs" />
+    <Compile Include="Request\RoleMenuRequest.cs" />
     <Compile Include="Request\RoleRequest.cs" />
     <Compile Include="Request\TerminalBulkRequest.cs" />
     <Compile Include="Request\TerminalRequest.cs" />
     <Compile Include="Request\UserDetailsBulkRequest.cs" />
     <Compile Include="Request\UserDetailsRequest.cs" />
+    <Compile Include="Response\AuditResponse.cs" />
     <Compile Include="Response\BrandResponse.cs" />
     <Compile Include="Response\ClientResponse.cs" />
+    <Compile Include="Response\EmailResponse.cs" />
     <Compile Include="Response\LoginResponse.cs" />
     <Compile Include="Response\MenuResponse.cs" />
     <Compile Include="Response\RoleMenuResponse.cs" />
     <Compile Include="Response\RoleResponse.cs" />
     <Compile Include="Response\StateResponse.cs" />
     <Compile Include="Response\TerminalResponse.cs" />
-    <Compile Include="Response\UserMenuResponse.cs" />
     <Compile Include="Response\UserDetailsResponse.cs" />
+    <Compile Include="Response\UserMenuResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -10,6 +10,12 @@ namespace DolphinServices.Response
     {
         public string ResponseCode { get; set; }
         public string ResponseMessage { get; set; }
+        public List<ClientDetailsObj> ClientDetails { get; set; }
+    }
+
+
+    public class ClientDetailsObj
+    {
         public int ClientId { get; set; }
         public string ClientName { get; set; }
         public int RespTimeIn { get; set; }
@@ -19,5 +25,7 @@ namespace DolphinServices.Response
         public string ClientBanner { get; set; }
         public string ClientAlias { get; set; }
         public bool? IsClientActive { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
     }
 }

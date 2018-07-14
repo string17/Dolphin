@@ -10,16 +10,16 @@ namespace DolphinServices.Response
     {
         public string ResponseCode { get; set; }
         public string ResponseMessage { get; set; }
-        public List<BrandDetails> BrandDetail { get; set; }
+        public List<BrandDetailsObj> BrandDetails { get; set; }
       }
 
 
 
-    public class BrandDetails
+    public class BrandDetailsObj
     {
         public int BrandId { get; set; }
         public string BrandName { get; set; }
         public string BrandDesc { get; set; }
-        public bool IsBrandActive { get; set; }
+        public bool? IsBrandActive { get; set; }
     }
 }

@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace DolphinServices.Response
 {
-    class RoleMenuResponse
+    public class RoleMenuResponse
     {
         public string ResponseCode { get; set; }
         public string ResponseMessage { get; set; }
+        public List<RoleMenuDetailsObj> RoleMenuDetails { get; set; }
+    }
+
+
+    public class RoleMenuDetailsObj
+    {
         public int Id { get; set; }
         public int ItemId { get; set; }
         public int RoleId { get; set; }
@@ -25,6 +31,6 @@ namespace DolphinServices.Response
         public string ItemAlias { get; set; }
         public string ExternalURL { get; set; }
         public string ItemIcon { get; set; }
-  
+
     }
 }

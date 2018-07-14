@@ -4,12 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DolphinServices.Response
+namespace DolphinServices.Responses
 {
     public class UserDetailsResponse
     {
         public string ResponseCode { get; set; }
         public string ResponseMessage { get; set; }
+        public List<UserDetailsObj> UserDetails { get; set; }
+    }
+
+
+    public class UserDetailsObj
+    {
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }

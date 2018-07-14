@@ -8,6 +8,13 @@ namespace DolphinServices.Response
 {
     public class MenuResponse
     {
+        public string ResponseCode { get; set; }
+        public string ResponseMessage { get; set; }
+        public List<MenuDetailsObj> MenuDetails { get; set; }
+    }
+
+    public class MenuDetailsObj
+    {
         public int MenuId { get; set; }
         public int ItemId { get; set; }
         public int RoleId { get; set; }

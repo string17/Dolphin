@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DolphinServices.Request
-{
+{ 
     public class TerminalRequest
     {
         public int TerminalId { get; set; }

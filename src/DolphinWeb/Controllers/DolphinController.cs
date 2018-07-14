@@ -27,7 +27,7 @@ namespace DolphinWeb.Controllers
 
 
         [AllowAnonymous]
-        //[Route("Index/{SystemName,SystemIP}")]
+        [Route("Index/{SystemName,SystemIP}")]
         public ActionResult Index()
         {
             ViewBag.SuccessMsg = TempData["Profile"];
@@ -50,30 +50,27 @@ namespace DolphinWeb.Controllers
                 request.Password = param.Password;
                 request.SystemIp = ipaddress;
                 request.Computername = ComputerDetails;
-                var success = _dolphinApi.ValidateUser(request);
-                if (success != null)
+                var result = _dolphinApi.ValidateUser(request);
+                if (result == null)
                 {
-                    if (success.ResponseCode.Equals("00"))
-                    {
-                        FormsAuthentication.SetAuthCookie(param.UserName, false);
-                        return RedirectToAction("Dashboard", "Dolphin");
-                    }
+                    ViewBag.ErrorMsg = "This service is not available";
+                }
+                else if (result.ResponseCode.Equals("00"))
+                {
+                    FormsAuthentication.SetAuthCookie(param.UserName, false);
+                    return RedirectToAction("Dashboard", "Dolphin");
+                }
 
-                    else if (success.ResponseCode.Equals("01"))
-                    {
-                        string Id = _encodingService.EncryptCharacter(param.UserName);
-                        TempData["ChangePassword"] = success.ResponseMessage;
-                        string NewURL = "http://localhost:51310/dolphin/resetpassword?Id=" + Id;
-                        Response.Redirect(NewURL, true);
-                    }
-                    else
-                    {
-                        ViewBag.ErrorMsg = success.ResponseMessage;
-                    }
+                else if (result.ResponseCode.Equals("01"))
+                {
+                    string Id = _encodingService.EncryptCharacter(param.UserName);
+                    TempData["ChangePassword"] = result.ResponseMessage;
+                    string NewURL = "http://localhost:51310/dolphin/resetpassword?Id=" + Id;
+                    Response.Redirect(NewURL, true);
                 }
                 else
                 {
-                    ViewBag.ErrorMsg = "This service is not available";
+                    ViewBag.ErrorMsg = result.ResponseMessage;
                 }
             }
             catch (Exception ex)
@@ -97,11 +94,11 @@ namespace DolphinWeb.Controllers
 
         public ActionResult LockAccount()
         {
-            var request = new LoginRequest();
-            request.UserName = User.Identity.Name;
-            request.SystemIp = ipaddress;
-            request.Computername = ComputerDetails;
-            ViewBag.UserDetails = _dolphinApi.GetUserInfo(request);
+            //var request = new LoginRequest();
+            //request.UserName = User.Identity.Name;
+            //request.SystemIp = ipaddress;
+            //request.Computername = ComputerDetails;
+            ViewBag.UserDetails = _dolphinApi.GetUserInfo(User.Identity.Name);
             return View();
         }
 
@@ -113,11 +110,6 @@ namespace DolphinWeb.Controllers
             {
                 return View();
             }
-            //var request = new LoginRequest();
-            //request.UserName = User.Identity.Name;
-            //request.SystemIp = ipaddress;
-            //request.Computername = ComputerDetails;
-            //ViewBag.UserDetails = _dolphinApi.GetUserInfo(request);
 
             try
             {
@@ -159,7 +151,7 @@ namespace DolphinWeb.Controllers
             request.UserName = User.Identity.Name;
             request.SystemIp = ipaddress;
             request.Computername = ComputerDetails;
-            var success=_dolphinApi.TerminateSession(request);
+            var success = _dolphinApi.TerminateSession(request);
             if (success != null)
             {
                 if (success.ResponseCode.Equals("00"))
@@ -175,7 +167,7 @@ namespace DolphinWeb.Controllers
             else
             {
                 return View();
-            }           
+            }
         }
 
 
@@ -197,7 +189,7 @@ namespace DolphinWeb.Controllers
             request.SystemIp = ipaddress;
             request.Computername = ComputerDetails;
             var success = _dolphinApi.ForgotPassword(request);
-            if (success!=null)
+            if (success != null)
             {
                 if (success.ResponseCode.Equals("00"))
                 {
@@ -237,7 +229,7 @@ namespace DolphinWeb.Controllers
             }
             if (param.Password.Any("!@#$%^&*".Contains) && param.Password.Length >= 6)
             {
-                if(param.Password == param.ConfirmPassword)
+                if (param.Password == param.ConfirmPassword)
                 {
                     var request = new LoginRequest();
                     request.UserName = _encodingService.DecryptCharacter(Id);
@@ -245,7 +237,7 @@ namespace DolphinWeb.Controllers
                     request.SystemIp = ipaddress;
                     request.Computername = ComputerDetails;
                     var success = _dolphinApi.ResetPassword(param);
-                    if (success!=null)
+                    if (success != null)
                     {
                         if (success.ResponseCode.Equals("00"))
                         {
@@ -272,7 +264,7 @@ namespace DolphinWeb.Controllers
                 ViewBag.ErrorMsg = "Password must contain special character and min of six in length";
             }
             return View();
-        
+
         }
 
 
@@ -281,13 +273,13 @@ namespace DolphinWeb.Controllers
             return View();
         }
 
-       
+
         public ActionResult ModifyProfile()
         {
             return View();
         }
 
 
-       
+
     }
 }

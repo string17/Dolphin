@@ -10,7 +10,6 @@ namespace DolphinServices.Response
     {
         public string ResponseCode { get; set; }
         public  string ResponseMessage { get; set; }
-        public  List<MenuResponse> UserMenu { get; set;}
-    
+        public  List<MenuDetailsObj> UserMenuDetails { get; set;}    
     }
 }

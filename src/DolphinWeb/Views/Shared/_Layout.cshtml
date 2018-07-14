@@ -1,59 +1,17 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
-</html>
-
-
+﻿
 @{
+    //var ipAddress = new DolphinServices.ApplicationLogic.AuditService().DetermineIPAddress();
+    //var computerName= new DolphinServices.ApplicationLogic.AuditService().DetermineCompName(ipAddress);
+   // var _service = new DolphinServices.Infrastructure.Services();
+    //var _menu = _service.GetMenu(User.Identity.Name);
+    //var _menu = _service.GetMenuByUsername(User.Identity.Name);
+    //var _displayName = _service.GetUserInfo(User.Identity.Name);
 
+    var _menu = ViewBag.LayoutModel;
+    var _displayName = ViewBag.UserData;
 
-    var ipaddress = new DolphinWeb.Services.AuditTrail().DetermineIPAddress();
-    var ComputerDetails = new DolphinWeb.Services.AuditTrail().DetermineCompName(ipaddress);
-    var _service = new DolphinWeb.Services.AppLogic();
-    var _menu = _service.GetMenu(User.Identity.Name, ComputerDetails, ipaddress);
-    //var _menu=_service.GetMenuByUsername(User.Identity.Name);
-    var _displayName = _service.GetUserInfo(User.Identity.Name, ComputerDetails, ipaddress);
     var currentTime = DateTime.Now;
 }
-
 
 
 
@@ -97,6 +55,7 @@
     </style>
 </head>
 <body>
+
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -242,7 +201,7 @@
                     </li>
                     <li class="nav-item dropdown d-none d-xl-inline-block">
                         <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                            <span class="mr-3">Hello, @_displayName.FirstName !</span><img class="img-xs rounded-circle" src="~/assets/UserImg/@_displayName.UserImg" alt="Profile image">
+                            <span class="mr-3">Hello, @_displayName.UserDetails.FirstOrDefault().FirstName !</span><img class="img-xs rounded-circle" src="~/assets/UserImg/@_displayName.UserDetails.FirstOrDefault().UserImg" alt="Profile image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                             <a class="dropdown-item p-0">
@@ -361,10 +320,10 @@
                 <ul class="nav">
                     <li class="nav-item nav-profile">
                         <div class="nav-link">
-                            <div class="profile-image"> <img src="~/assets/UserImg/@_displayName.UserImg" alt="image" /> <span class="online-status online"></span> </div>
+                            <div class="profile-image"> <img src="~/assets/UserImg/@_displayName.UserDetails.FirstOrDefault().UserImg" alt="image" /> <span class="online-status online"></span> </div>
                             <div class="profile-name">
-                                <p class="name">@_displayName.FirstName @_displayName.MiddleName @_displayName.LastName </p>
-                                <p class="designation">@_displayName.Title</p>
+                                <p class="name">@_displayName.FirstOrDefault().FirstName @_displayName.UserDetails.FirstOrDefault().MiddleName @_displayName.UserDetails.FirstOrDefault().LastName </p>
+                                <p class="designation">@_displayName.UserDetails.FirstOrDefault().Title</p>
                                 @currentTime
                             </div>
 
@@ -383,7 +342,8 @@
                         else
 
                         {
-                            var parent = _menu.Where(menu => menu.MenuId == 0);
+                            var parent = _menu.Where(menu => menu.MenuId ==0);
+                            //var menuItem=new List<>
                             //filter Parent Menu
                             foreach (var parentMenu in parent)
                             {
@@ -391,7 +351,7 @@
                                 hasChild = _menu.Where(menu => menu.MenuId == parentMenu.ItemId).Count() > 0 ? true : false;
                                 if (hasChild)
                                 {
-                                    var childmenu = _menu.Where(menu => menu.MenuId == parentMenu.ItemId);
+                                    var childmenu = _menu.UserMenuDetails.Where(menu => menu.MenuId == parentMenu.ItemId);
                                     <li class="nav-item">
                                         <a class="nav-link" data-toggle="collapse" href="#@parentMenu.ItemAlias" aria-expanded="false" aria-controls="@parentMenu.ItemAlias">
                                             <img class="menu-icon" src="~/assets/images/menu_icons/@parentMenu.ItemIcon" alt="menu icon">

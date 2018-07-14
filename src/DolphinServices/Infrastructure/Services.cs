@@ -1,5 +1,6 @@
 ﻿using DolphinServices.Request;
 using DolphinServices.Response;
+using DolphinServices.Responses;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -20,7 +21,31 @@ namespace DolphinServices.Infrastructure
             string url = string.Concat(_baseUrl, "login");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("content-type", "application/x-www-form-urlencoded");
+            request.AddHeader("content-type", "application/json");
+            string LoginObj = JsonConvert.SerializeObject(param);
+            request.AddParameter("application/json", LoginObj, ParameterType.RequestBody);
+            request.RequestFormat = DataFormat.Json;
+            IRestResponse response = client.Execute(request);
+            var loginResponse = JsonConvert.DeserializeObject<LoginResponse>(response.Content);
+
+            if (loginResponse == null || loginResponse.ResponseCode == null)
+            {
+                return null;
+            }
+            else
+            {
+                return loginResponse;
+            }
+        }
+
+
+
+        public LoginResponse lockScreen(LoginRequest param)
+        {
+            string url = string.Concat(_baseUrl, "lockaccess");
+            var client = new RestClient(url);
+            var request = new RestSharp.RestRequest(Method.POST);
+            request.AddHeader("content-type", "application/json");
             string LoginDetails = JsonConvert.SerializeObject(param);
             request.AddParameter("application/json", LoginDetails, ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
@@ -36,7 +61,6 @@ namespace DolphinServices.Infrastructure
                 return loginResponse;
             }
         }
-
 
 
         public LoginResponse UnlockAccount(LoginRequest param)
@@ -61,13 +85,12 @@ namespace DolphinServices.Infrastructure
             }
         }
 
-
         public UserDetailsResponse GetUserDetails(int Id)
         {
             string url = string.Concat(_baseUrl, "userdetails");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("content-type", "application/x-www-form-urlencoded");
+            request.AddHeader("content-type", "application/json");
             string UserId = JsonConvert.SerializeObject(Id);
             request.AddParameter("application/json", UserId, ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
@@ -84,20 +107,17 @@ namespace DolphinServices.Infrastructure
         }
 
 
-        public UserDetailsResponse GetUserInfo(LoginRequest param)
+        public UserDetailsResponse GetUserInfo(string UserName)
         {
             string url = string.Concat(_baseUrl, "userinfo");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            string UserLogon = JsonConvert.SerializeObject(param);
-            request.AddParameter("application/json", UserLogon, ParameterType.RequestBody);
+            request.AddHeader("content-type", "application/json");
+            string UserId = JsonConvert.SerializeObject(UserName);
+            request.AddParameter("application/json", UserId, ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
             IRestResponse response = client.Execute(request);
-            if (response == null)
-                return null;
-
-            UserDetailsResponse userDetailsResponse = JsonConvert.DeserializeObject<UserDetailsResponse>(response.Content);
+            var userDetailsResponse = JsonConvert.DeserializeObject<UserDetailsResponse>(response.Content);
             if (userDetailsResponse == null || userDetailsResponse.ResponseCode == null)
             {
                 return null;
@@ -110,18 +130,18 @@ namespace DolphinServices.Infrastructure
 
 
         //Get User Menu
-        public List<UserMenuResponse> GetMenu(LoginRequest param)
+        public UserMenuResponse GetMenu(string UserName)
         {
-            string url = string.Concat(_baseUrl, "Menu");
+            string url = string.Concat(_baseUrl, "menu");
             var client = new RestClient(url);
             var request = new RestSharp.RestRequest(Method.POST);
-            request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            string UserMenu = JsonConvert.SerializeObject(param);
-            request.AddParameter("application/json", UserMenu, ParameterType.RequestBody);
+            request.AddHeader("content-type", "application/json");
+            string LoginObj = JsonConvert.SerializeObject(UserName);
+            request.AddParameter("application/json", LoginObj, ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
             IRestResponse response = client.Execute(request);
-            List<UserMenuResponse> userMenuResponse = JsonConvert.DeserializeObject<List<UserMenuResponse>>(response.Content);
-            if (userMenuResponse == null || userMenuResponse.FirstOrDefault().ResponseCode == null)
+            var userMenuResponse = JsonConvert.DeserializeObject<UserMenuResponse>(response.Content);
+            if (userMenuResponse == null || userMenuResponse.ResponseCode == null)
             {
                 return null;
             }
@@ -133,7 +153,7 @@ namespace DolphinServices.Infrastructure
         }
 
 
-        public List<RoleResponse> GetAllRole()
+        public RoleResponse GetAllRole()
         {
             string url = string.Concat(_baseUrl, "allrole");
             var client = new RestClient(url);
@@ -142,8 +162,8 @@ namespace DolphinServices.Infrastructure
             request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
-            List<RoleResponse> roleResponse = JsonConvert.DeserializeObject<List<RoleResponse>>(response.Content);
-            if (roleResponse == null || roleResponse.FirstOrDefault().ResponseCode == null)
+            RoleResponse roleResponse = JsonConvert.DeserializeObject<RoleResponse>(response.Content);
+            if (roleResponse == null || roleResponse.ResponseCode == null)
             {
                 return null;
             }
@@ -155,7 +175,7 @@ namespace DolphinServices.Infrastructure
         }
 
 
-        public List<BrandResponse> GetAllBrand()
+        public BrandResponse GetAllBrand()
         {
             string url = string.Concat(_baseUrl, "allbrands");
             var client = new RestClient(url);
@@ -163,8 +183,8 @@ namespace DolphinServices.Infrastructure
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
             request.AddParameter("application/json", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-            List<BrandResponse> brandResponse = JsonConvert.DeserializeObject<List<BrandResponse>>(response.Content);
-            if (brandResponse == null || brandResponse.FirstOrDefault().ResponseCode == null)
+            var brandResponse = JsonConvert.DeserializeObject<BrandResponse>(response.Content);
+            if (brandResponse == null || brandResponse.ResponseCode == null)
             {
                 return null;
             }
@@ -226,7 +246,7 @@ namespace DolphinServices.Infrastructure
         //}
 
 
-        public List<ClientResponse> GetAllClient()
+        public ClientResponse GetAllClient()
         {
             string url = string.Concat(_baseUrl, "allclient");
             var client = new RestClient(url);
@@ -235,8 +255,8 @@ namespace DolphinServices.Infrastructure
             request.AddParameter("application/x-www-form-urlencoded", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
-            List<ClientResponse> clientResponse = JsonConvert.DeserializeObject<List<ClientResponse>>(response.Content);
-            if (clientResponse == null || clientResponse.FirstOrDefault().ResponseCode==null)
+            var clientResponse = JsonConvert.DeserializeObject<ClientResponse>(response.Content);
+            if (clientResponse == null || clientResponse.ResponseCode==null)
             {
                 return null;
             }
@@ -248,7 +268,7 @@ namespace DolphinServices.Infrastructure
         }
 
 
-        public List<ClientResponse> GetOnlyClients()
+        public ClientResponse GetOnlyClients()
         {
             string url = string.Concat(_baseUrl, "onlyclients");
             var client = new RestClient(url);
@@ -256,8 +276,8 @@ namespace DolphinServices.Infrastructure
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
             request.AddParameter("application/x-www-form-urlencoded", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-            List<ClientResponse> clientResponse = JsonConvert.DeserializeObject<List<ClientResponse>>(response.Content);
-            if (clientResponse == null || clientResponse.FirstOrDefault().ResponseCode == null)
+            var clientResponse = JsonConvert.DeserializeObject<ClientResponse>(response.Content);
+            if (clientResponse == null || clientResponse.ResponseCode == null)
             {
                 return clientResponse;
             }
@@ -268,7 +288,7 @@ namespace DolphinServices.Infrastructure
         }
 
 
-        public List<StateResponse> GetAllStates()
+        public StateResponse GetAllStates()
         {
             string url = string.Concat(_baseUrl, "allstates");
             var client = new RestClient(url);
@@ -276,8 +296,8 @@ namespace DolphinServices.Infrastructure
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
             request.AddParameter("application/x-www-form-urlencoded", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-            List<StateResponse> stateResponse = JsonConvert.DeserializeObject<List<StateResponse>>(response.Content);
-            if (stateResponse == null || stateResponse.FirstOrDefault().ResponseCode==null)
+            var stateResponse = JsonConvert.DeserializeObject<StateResponse>(response.Content);
+            if (stateResponse == null || stateResponse.ResponseCode==null)
             {
                 return null;
             }
@@ -290,7 +310,7 @@ namespace DolphinServices.Infrastructure
 
 
 
-        public List<UserDetailsResponse> GetAllUserByRole(string Role)
+        public UserDetailsResponse GetAllUserByRole(string Role)
         {
             string url = string.Concat(_baseUrl, "allengineers");
             var client = new RestClient(url);
@@ -300,8 +320,8 @@ namespace DolphinServices.Infrastructure
             request.AddParameter("application/json", RoleName, ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
             IRestResponse response = client.Execute(request);
-            List<UserDetailsResponse> userDetailsResponse = JsonConvert.DeserializeObject<List<UserDetailsResponse>>(response.Content);
-            if (userDetailsResponse == null || userDetailsResponse.FirstOrDefault().ResponseCode==null)
+            var userDetailsResponse = JsonConvert.DeserializeObject<UserDetailsResponse>(response.Content);
+            if (userDetailsResponse == null || userDetailsResponse.ResponseCode==null)
             {
                 return null;
             }
@@ -495,7 +515,7 @@ namespace DolphinServices.Infrastructure
         }
 
 
-        public List<UserDetailsResponse> GetAllUser()
+        public UserDetailsResponse GetAllUser()
         {
             string url = string.Concat(_baseUrl, "allusers");
             var client = new RestClient(url);
@@ -503,8 +523,8 @@ namespace DolphinServices.Infrastructure
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
             request.AddParameter("application/x-www-form-urlencoded", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-            List<UserDetailsResponse> userDetailsResponse = JsonConvert.DeserializeObject<List<UserDetailsResponse>>(response.Content);
-            if (userDetailsResponse == null || userDetailsResponse.FirstOrDefault().ResponseCode==null)
+            UserDetailsResponse userDetailsResponse = JsonConvert.DeserializeObject<UserDetailsResponse>(response.Content);
+            if (userDetailsResponse == null || userDetailsResponse.ResponseCode==null)
             {
                 return null;
             }
@@ -636,7 +656,7 @@ namespace DolphinServices.Infrastructure
 
         }
 
-        public List<TerminalResponse> GetAllTerminal()
+        public TerminalResponse GetAllTerminal()
         {
             string url = string.Concat(_baseUrl, "allterminals");
             var client = new RestClient(url);
@@ -644,8 +664,8 @@ namespace DolphinServices.Infrastructure
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
             request.AddParameter("application/x-www-form-urlencoded", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-            List<TerminalResponse> terminalResponse = JsonConvert.DeserializeObject<List<TerminalResponse>>(response.Content);
-            if (terminalResponse == null || terminalResponse.FirstOrDefault().ResponseCode == null)
+            var terminalResponse = JsonConvert.DeserializeObject<TerminalResponse>(response.Content);
+            if (terminalResponse == null || terminalResponse.ResponseCode == null)
             {
                 return null;
             }
